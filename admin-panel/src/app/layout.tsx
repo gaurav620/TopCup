@@ -14,6 +14,23 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <head>
+                <title>TopCup Admin Panel</title>
+                <link rel="manifest" href="/manifest.json" />
+                <meta name="theme-color" content="#6366f1" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            if ('serviceWorker' in navigator) {
+                                window.addEventListener('load', function() {
+                                    navigator.serviceWorker.register('/sw.js');
+                                });
+                            }
+                        `,
+                    }}
+                />
+            </head>
             <body className={inter.className}>
                 <SessionProvider>
                     {children}

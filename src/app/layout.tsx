@@ -25,6 +25,16 @@ export const metadata: Metadata = {
     authors: [{ name: 'TopCup' }],
     creator: 'TopCup',
     publisher: 'TopCup',
+    applicationName: 'TopCup',
+    manifest: '/manifest.json',
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: 'TopCup',
+    },
+    formatDetection: {
+        telephone: false,
+    },
     openGraph: {
         title: 'TopCup - Premium Cakes, Gifts & Snacks',
         description: 'Order delicious cakes, thoughtful gifts, and tasty snacks online.',
@@ -43,8 +53,14 @@ export const metadata: Metadata = {
         follow: true,
     },
     icons: {
-        icon: '/favicon.ico',
-        apple: '/apple-touch-icon.png',
+        icon: '/icons/icon-192x192.png',
+        apple: '/icons/icon-192x192.png',
+    },
+    themeColor: '#f97316',
+    viewport: {
+        width: 'device-width',
+        initialScale: 1,
+        maximumScale: 5,
     },
 };
 
@@ -55,6 +71,24 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${outfit.variable} ${playfair.variable}`}>
+            <head>
+                <link rel="manifest" href="/manifest.json" />
+                <meta name="theme-color" content="#f97316" />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            if ('serviceWorker' in navigator) {
+                                window.addEventListener('load', function() {
+                                    navigator.serviceWorker.register('/sw.js').then(
+                                        function(registration) { console.log('SW registered'); },
+                                        function(err) { console.log('SW registration failed'); }
+                                    );
+                                });
+                            }
+                        `,
+                    }}
+                />
+            </head>
             <body className="min-h-screen flex flex-col">
                 <AuthProvider>
                     <Toaster
