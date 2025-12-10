@@ -343,7 +343,7 @@ MIT License - feel free to use this project for learning or commercial purposes.
 
 ## 👨‍💻 Author
 
-**Saurav Kumar**
+**Gaurav Kumar Mehta**
 - GitHub: [@gaurav620](https://github.com/gaurav620)
 
 ## 🙏 Acknowledgments
@@ -358,7 +358,7 @@ MIT License - feel free to use this project for learning or commercial purposes.
 For issues and questions:
 1. Check existing issues on GitHub
 2. Create a new issue with detailed description
-3. Contact: [your-email@example.com]
+3. Contact: gauravkumarmehta06@gmail.com
 
 ## 🎯 Getting Help
 
