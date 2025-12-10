@@ -13,21 +13,34 @@ export default function AdminLogin() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
 
-        setTimeout(() => {
-            if (username === 'admin' && password === 'admin123') {
+        try {
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: username, password })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
                 localStorage.setItem('adminAuth', 'true');
-                localStorage.setItem('adminUser', 'Administrator');
+                localStorage.setItem('adminUser', data.data.name);
+                localStorage.setItem('adminId', data.data._id);
+                localStorage.setItem('adminEmail', data.data.email);
                 router.push('/dashboard');
             } else {
-                setError('Invalid credentials. Use admin/admin123');
+                setError(data.error || 'Invalid credentials');
                 setLoading(false);
             }
-        }, 300);
+        } catch (error) {
+            setError('Login failed. Please try again.');
+            setLoading(false);
+        }
     };
 
     return (
@@ -65,16 +78,16 @@ export default function AdminLogin() {
                     <form onSubmit={handleLogin} className="space-y-5">
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Username
+                                Email
                             </label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                 <input
-                                    type="text"
+                                    type="email"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
-                                    placeholder="Enter admin username"
+                                    placeholder="Enter admin email"
                                     required
                                 />
                             </div>
@@ -132,13 +145,13 @@ export default function AdminLogin() {
 
                     {/* Credentials hint */}
                     <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
-                        <p className="text-sm font-semibold text-indigo-900 mb-2">🔑 Default Credentials:</p>
+                        <p className="text-sm font-semibold text-indigo-900 mb-2">🔑 First Time Setup:</p>
                         <div className="space-y-1">
                             <p className="text-sm text-indigo-700">
-                                Username: <code className="bg-white px-2 py-1 rounded font-mono text-indigo-600 font-semibold">admin</code>
+                                Run: <code className="bg-white px-2 py-1 rounded font-mono text-indigo-600 font-semibold">npm run seed:admin</code>
                             </p>
-                            <p className="text-sm text-indigo-700">
-                                Password: <code className="bg-white px-2 py-1 rounded font-mono text-indigo-600 font-semibold">admin123</code>
+                            <p className="text-xs text-indigo-600 mt-2">
+                                Then login with credentials from .env.local
                             </p>
                         </div>
                     </div>
