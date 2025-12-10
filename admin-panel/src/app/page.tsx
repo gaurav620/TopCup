@@ -143,6 +143,16 @@ export default function AdminLogin() {
                         </button>
                     </form>
 
+                    {/* Forgot Password Link */}
+                    <div className="mt-4 text-center">
+                        <p className="text-sm text-gray-600">
+                            Forgot your password?{' '}
+                            <span className="text-indigo-600 font-semibold cursor-not-allowed opacity-50" title="Contact super admin to reset password">
+                                Contact Admin
+                            </span>
+                        </p>
+                    </div>
+
                     {/* Credentials hint */}
                     <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
                         <p className="text-sm font-semibold text-indigo-900 mb-2">🔑 First Time Setup:</p>
