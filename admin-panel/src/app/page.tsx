@@ -147,9 +147,9 @@ export default function AdminLogin() {
                     <div className="mt-4 text-center">
                         <p className="text-sm text-gray-600">
                             Forgot your password?{' '}
-                            <span className="text-indigo-600 font-semibold cursor-not-allowed opacity-50" title="Contact super admin to reset password">
-                                Contact Admin
-                            </span>
+                            <Link href="/forgot-password" className="text-indigo-600 font-semibold hover:text-indigo-700">
+                                Reset it here
+                            </Link>
                         </p>
                     </div>
 
