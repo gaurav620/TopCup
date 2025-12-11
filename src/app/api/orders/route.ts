@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
         await dbConnect();
 
         // Fetch user's orders, sorted by creation date (newest first)
-        const orders = await Order.find({ user: session.user.id })
+        const orders = await Order.find({ 'customer.userId': session.user.id })
             .sort({ createdAt: -1 })
             .lean();
 
@@ -128,7 +128,8 @@ export async function GET(request: NextRequest) {
             orders: orders.map(order => ({
                 ...order,
                 _id: order._id.toString(),
-                user: order.user.toString(),
+                orderNumber: order.orderNumber || order.orderId,  // Fallback to orderId
+                totalPrice: order.totalAmount || order.totalPrice,  // Support both fields
             })),
             demoMode: false,
         });

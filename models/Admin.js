@@ -36,9 +36,6 @@ const adminSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index for faster queries
-adminSchema.index({ email: 1 });
-
 // Don't return password in queries
 adminSchema.methods.toJSON = function () {
     const obj = this.toObject();

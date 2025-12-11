@@ -22,12 +22,18 @@ export async function GET(req: NextRequest) {
         }
 
         const orders = await Order.find(query)
-            .populate('user', 'name email')
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .lean();
 
         return NextResponse.json({
             success: true,
-            orders,
+            orders: orders.map(order => ({
+                ...order,
+                _id: order._id.toString(),
+                orderNumber: (order as any).orderNumber || (order as any).orderId,
+                totalPrice: (order as any).totalAmount || (order as any).totalPrice,
+                customer: order.customer || { name: 'Unknown', email: 'N/A' },
+            })),
             count: orders.length
         });
     } catch (error: any) {
@@ -58,7 +64,7 @@ export async function PUT(req: NextRequest) {
             id,
             { status },
             { new: true, runValidators: true }
-        ).populate('user', 'name email');
+        ).lean();
 
         if (!order) {
             return NextResponse.json(
@@ -70,7 +76,10 @@ export async function PUT(req: NextRequest) {
         return NextResponse.json({
             success: true,
             message: 'Order status updated successfully',
-            order
+            order: {
+                ...order,
+                _id: order._id.toString(),
+            }
         });
     } catch (error: any) {
         console.error('Error updating order:', error);

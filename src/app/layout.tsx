@@ -56,12 +56,13 @@ export const metadata: Metadata = {
         icon: '/icons/icon-192x192.png',
         apple: '/icons/icon-192x192.png',
     },
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
     themeColor: '#f97316',
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-        maximumScale: 5,
-    },
 };
 
 export default function RootLayout({

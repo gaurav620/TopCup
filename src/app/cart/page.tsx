@@ -3,25 +3,41 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Trash2, Minus, Plus, ShoppingBag, ArrowRight, Tag, Truck } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingBag, ArrowRight, Tag, Truck, X, Check } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
+import { useCouponStore } from '@/store/couponStore';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 export default function CartPage() {
-    const { items, updateQuantity, removeItem, clearCart, getTotalPrice, getSubtotal } = useCartStore();
+    const { items, updateQuantity, removeItem, clearCart, getSubtotal } = useCartStore();
+    const { appliedCoupon, applyCoupon, removeCoupon, calculateDiscount, availableCoupons } = useCouponStore();
     const [couponCode, setCouponCode] = useState('');
-    const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
 
     const subtotal = getSubtotal();
-    const discount = appliedCoupon ? subtotal * 0.2 : 0; // 20% discount
+    const couponDiscount = calculateDiscount(subtotal);
     const deliveryCharge = subtotal >= 499 ? 0 : 49;
-    const total = subtotal - discount + deliveryCharge;
+    const total = subtotal - couponDiscount + deliveryCharge;
 
     const handleApplyCoupon = () => {
-        if (couponCode.toUpperCase() === 'WELCOME20') {
-            setAppliedCoupon(couponCode.toUpperCase());
+        if (!couponCode.trim()) {
+            toast.error('Please enter a coupon code');
+            return;
         }
+
+        const result = applyCoupon(couponCode, subtotal);
+        if (result.success) {
+            toast.success(result.message);
+            setCouponCode('');
+        } else {
+            toast.error(result.message);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
+        removeCoupon();
+        toast.success('Coupon removed');
     };
 
     if (items.length === 0) {
@@ -143,28 +159,66 @@ export default function CartPage() {
 
                             {/* Coupon */}
                             <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Have a coupon code?
+                                </label>
                                 <div className="flex gap-2">
                                     <input
                                         type="text"
                                         placeholder="Enter coupon code"
                                         value={couponCode}
                                         onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                                        className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+                                        onKeyPress={(e) => e.key === 'Enter' && handleApplyCoupon()}
+                                        disabled={!!appliedCoupon}
+                                        className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 disabled:bg-gray-50 disabled:text-gray-500"
                                     />
-                                    <Button onClick={handleApplyCoupon} variant="outline">
-                                        Apply
-                                    </Button>
+                                    {appliedCoupon ? (
+                                        <Button onClick={handleRemoveCoupon} variant="outline">
+                                            <X className="w-4 h-4" />
+                                        </Button>
+                                    ) : (
+                                        <Button onClick={handleApplyCoupon} variant="outline">
+                                            Apply
+                                        </Button>
+                                    )}
                                 </div>
                                 {appliedCoupon && (
-                                    <p className="text-sm text-green-600 mt-2 flex items-center gap-1">
-                                        <Tag className="w-4 h-4" />
-                                        {appliedCoupon} applied - 20% off!
-                                    </p>
+                                    <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+                                        <p className="text-sm text-green-700 flex items-center gap-2">
+                                            <Check className="w-4 h-4" />
+                                            <span className="font-medium">{appliedCoupon.code}</span>
+                                            - {appliedCoupon.description}
+                                        </p>
+                                    </div>
                                 )}
-                                {!appliedCoupon && (
-                                    <p className="text-xs text-gray-500 mt-2">
-                                        Try: WELCOME20 for 20% off
-                                    </p>
+                                {!appliedCoupon && availableCoupons.length > 0 && (
+                                    <div className="mt-3 space-y-2">
+                                        <p className="text-xs font-medium text-gray-700">Available Coupons:</p>
+                                        {availableCoupons.slice(0, 3).map((coup) => (
+                                            <button
+                                                key={coup.code}
+                                                onClick={() => {
+                                                    setCouponCode(coup.code);
+                                                    const result = applyCoupon(coup.code, subtotal);
+                                                    if (result.success) {
+                                                        toast.success(result.message);
+                                                        setCouponCode('');
+                                                    } else {
+                                                        toast.error(result.message);
+                                                    }
+                                                }}
+                                                className="w-full text-left p-2 rounded-lg border border-dashed border-primary-300 hover:border-primary-500 hover:bg-primary-50 transition-colors group"
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div>
+                                                        <p className="text-xs font-bold text-primary-600">{coup.code}</p>
+                                                        <p className="text-xs text-gray-600">{coup.description}</p>
+                                                    </div>
+                                                    <Tag className="w-4 h-4 text-primary-400 group-hover:text-primary-600" />
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
                                 )}
                             </div>
 
@@ -174,10 +228,13 @@ export default function CartPage() {
                                     <span>Subtotal ({items.length} items)</span>
                                     <span>₹{subtotal.toLocaleString('en-IN')}</span>
                                 </div>
-                                {discount > 0 && (
-                                    <div className="flex justify-between text-green-600">
-                                        <span>Discount</span>
-                                        <span>-₹{discount.toLocaleString('en-IN')}</span>
+                                {couponDiscount > 0 && (
+                                    <div className="flex justify-between text-green-600 font-medium">
+                                        <span className="flex items-center gap-1">
+                                            <Tag className="w-4 h-4" />
+                                            Coupon Discount
+                                        </span>
+                                        <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
                                     </div>
                                 )}
                                 <div className="flex justify-between text-gray-600">
@@ -185,13 +242,13 @@ export default function CartPage() {
                                         <Truck className="w-4 h-4" />
                                         Delivery
                                     </span>
-                                    <span className={deliveryCharge === 0 ? 'text-green-600' : ''}>
+                                    <span className={deliveryCharge === 0 ? 'text-green-600 font-medium' : ''}>
                                         {deliveryCharge === 0 ? 'FREE' : `₹${deliveryCharge}`}
                                     </span>
                                 </div>
                                 {deliveryCharge > 0 && (
                                     <p className="text-xs text-gray-500">
-                                        Free delivery on orders above ₹499
+                                        Add ₹{(499 - subtotal).toLocaleString('en-IN')} more for free delivery
                                     </p>
                                 )}
                                 <div className="border-t border-gray-100 pt-3">
@@ -199,6 +256,11 @@ export default function CartPage() {
                                         <span>Total</span>
                                         <span>₹{total.toLocaleString('en-IN')}</span>
                                     </div>
+                                    {couponDiscount > 0 && (
+                                        <p className="text-xs text-green-600 mt-1 font-medium">
+                                            You saved ₹{couponDiscount.toLocaleString('en-IN')}!
+                                        </p>
+                                    )}
                                     <p className="text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
                                 </div>
                             </div>

@@ -44,37 +44,44 @@ export async function POST(request: NextRequest) {
 
         // Create COD order
         const order = await Order.create({
-            user: session.user.id,
-            items: items.map((item: any) => {
-                // Only include product field if it's a valid ObjectId
-                const orderItem: any = {
-                    name: item.name,
-                    image: item.image,
-                    price: item.discountPrice || item.price,
-                    quantity: item.quantity,
-                };
-
-                // Try to use product ID if it's a valid ObjectId
-                if (item.id && mongoose.Types.ObjectId.isValid(item.id)) {
-                    orderItem.product = item.id;
-                }
-
-                return orderItem;
-            }),
-            shippingAddress: address,
-            paymentMethod: 'cod',
+            customer: {
+                name: session.user.name || address.fullName,
+                email: session.user.email,
+                phone: address.phone,
+                userId: session.user.id,
+            },
+            items: items.map((item: any) => ({
+                productId: item.id && mongoose.Types.ObjectId.isValid(item.id) ? item.id : new mongoose.Types.ObjectId(),
+                name: item.name,
+                price: item.discountPrice || item.price,
+                quantity: item.quantity,
+                image: item.image,
+                total: (item.discountPrice || item.price) * item.quantity,
+            })),
+            deliveryAddress: {
+                street: address.addressLine1,
+                city: address.city,
+                state: address.state,
+                zipCode: address.pincode,
+                landmark: address.addressLine2 || '',
+                fullAddress: `${address.addressLine1}, ${address.addressLine2 ? address.addressLine2 + ', ' : ''}${address.city}, ${address.state} - ${address.pincode}`,
+            },
+            paymentMethod: 'cash', // COD = cash
             paymentStatus: 'pending',
-            itemsPrice,
-            shippingPrice,
-            totalPrice,
-            orderStatus: 'confirmed',
+            subtotal: itemsPrice,
+            deliveryFee: shippingPrice,
+            discount: 0,
+            totalAmount: totalPrice,
+            status: 'confirmed', // COD orders are confirmed immediately
+            orderId: 'ORD-' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase(),
+            orderNumber: 'ORD-' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase(),
         });
 
 
         return NextResponse.json({
             message: 'Order placed successfully',
             orderId: order._id.toString(),
-            orderNumber: order.orderNumber,
+            orderNumber: (order as any).orderNumber, // Return orderNumber
         });
     } catch (error: any) {
         console.error('COD order error:', error);

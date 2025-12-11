@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, CreditCard, Truck, Wallet, Banknote, ChevronRight, Check, Shield, Lock, Smartphone } from 'lucide-react';
+import { MapPin, Phone, CreditCard, Truck, Wallet, Banknote, ChevronRight, Check, Shield, Lock, Smartphone, Tag } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
+import { useCouponStore } from '@/store/couponStore';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Image from 'next/image';
@@ -27,6 +28,7 @@ export default function CheckoutPage() {
     const router = useRouter();
     const { data: session, status } = useSession();
     const { items, getTotalPrice, getSubtotal, clearCart } = useCartStore();
+    const { appliedCoupon, calculateDiscount } = useCouponStore();
     const [step, setStep] = useState(1);
     const [isProcessing, setIsProcessing] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'online' | 'cod'>('online');
@@ -41,8 +43,10 @@ export default function CheckoutPage() {
     });
 
     const subtotal = getSubtotal();
+    const couponDiscount = calculateDiscount(subtotal);
     const deliveryCharge = subtotal >= 499 ? 0 : 49;
-    const total = subtotal + deliveryCharge;
+    const total = subtotal - couponDiscount + deliveryCharge;
+
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -361,8 +365,8 @@ export default function CheckoutPage() {
                                     {/* Online Payment */}
                                     <label
                                         className={`flex items-start gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === 'online'
-                                                ? 'border-primary-500 bg-primary-50'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                            ? 'border-primary-500 bg-primary-50'
+                                            : 'border-gray-200 hover:border-gray-300'
                                             }`}
                                     >
                                         <input
@@ -404,8 +408,8 @@ export default function CheckoutPage() {
                                     {/* Cash on Delivery */}
                                     <label
                                         className={`flex items-start gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === 'cod'
-                                                ? 'border-primary-500 bg-primary-50'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                            ? 'border-primary-500 bg-primary-50'
+                                            : 'border-gray-200 hover:border-gray-300'
                                             }`}
                                     >
                                         <input
@@ -480,6 +484,15 @@ export default function CheckoutPage() {
                                     <span>Subtotal</span>
                                     <span>₹{subtotal.toLocaleString('en-IN')}</span>
                                 </div>
+                                {couponDiscount > 0 && (
+                                    <div className="flex justify-between text-green-600 font-medium">
+                                        <span className="flex items-center gap-1">
+                                            <Tag className="w-4 h-4" />
+                                            Coupon ({appliedCoupon?.code})
+                                        </span>
+                                        <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
+                                    </div>
+                                )}
                                 <div className="flex justify-between text-gray-600">
                                     <span className="flex items-center gap-1">
                                         <Truck className="w-4 h-4" />

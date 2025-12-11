@@ -141,7 +141,7 @@ export default function OrdersPage() {
                 {/* Orders List */}
                 <div className="space-y-4">
                     {orders.map((order, index) => {
-                        const statusInfo = statusConfig[order.orderStatus as keyof typeof statusConfig] || statusConfig.pending;
+                        const statusInfo = statusConfig[order.status as keyof typeof statusConfig] || statusConfig.pending;
                         const StatusIcon = statusInfo.icon;
 
                         return (
@@ -204,7 +204,7 @@ export default function OrdersPage() {
                                             <p className="text-xl font-bold text-primary-600">₹{order.totalPrice}</p>
                                         </div>
                                         <div className="flex gap-2">
-                                            <Link href={`/track-order?orderId=${order.orderNumber}`}>
+                                            <Link href={`/track-order/${order._id}`}>
                                                 <Button variant="outline" size="sm" leftIcon={<Eye className="w-4 h-4" />}>
                                                     Track Order
                                                 </Button>

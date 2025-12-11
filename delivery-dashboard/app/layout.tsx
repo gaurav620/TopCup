@@ -5,17 +5,18 @@ export const metadata: Metadata = {
     title: 'TopCup Delivery Partner Dashboard',
     description: 'Manage your deliveries and track performance with TopCup',
     manifest: '/manifest.json',
-    themeColor: '#14b8a6',
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-        maximumScale: 5,
-    },
     appleWebApp: {
         capable: true,
         statusBarStyle: 'default',
         title: 'TopCup Delivery',
     },
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    themeColor: '#14b8a6',
 };
 
 export default function RootLayout({

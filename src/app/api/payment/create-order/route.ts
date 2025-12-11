@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-// Check if we're in demo mode (no database)
-const DEMO_MODE = !process.env.MONGODB_URI || process.env.MONGODB_URI.includes('localhost');
+// Check if we're in demo mode (no Razorpay keys or explicit demo mode)
+const DEMO_MODE = process.env.PAYMENT_DEMO_MODE === 'true' || !process.env.RAZORPAY_KEY_ID;
 
 export async function POST(request: NextRequest) {
     try {
@@ -55,37 +55,44 @@ export async function POST(request: NextRequest) {
 
         // Create order in database
         const order = await Order.create({
-            user: session.user.id,
-            items: items.map((item: any) => {
-                // Only include product field if it's a valid ObjectId
-                const orderItem: any = {
-                    name: item.name,
-                    image: item.image,
-                    price: item.discountPrice || item.price,
-                    quantity: item.quantity,
-                };
-
-                // Try to use product ID if it's a valid ObjectId
-                if (item.id && mongoose.Types.ObjectId.isValid(item.id)) {
-                    orderItem.product = item.id;
-                }
-
-                return orderItem;
-            }),
-            shippingAddress: address,
-            paymentMethod: 'razorpay',
+            customer: {
+                name: session.user.name || address.fullName,
+                email: session.user.email,
+                phone: address.phone,
+                userId: session.user.id,
+            },
+            items: items.map((item: any) => ({
+                productId: item.id && mongoose.Types.ObjectId.isValid(item.id) ? item.id : new mongoose.Types.ObjectId(),
+                name: item.name,
+                price: item.discountPrice || item.price,
+                quantity: item.quantity,
+                image: item.image,
+                total: (item.discountPrice || item.price) * item.quantity,
+            })),
+            deliveryAddress: {
+                street: address.addressLine1,
+                city: address.city,
+                state: address.state,
+                zipCode: address.pincode,
+                landmark: address.addressLine2 || '',
+                fullAddress: `${address.addressLine1}, ${address.addressLine2 ? address.addressLine2 + ', ' : ''}${address.city}, ${address.state} - ${address.pincode}`,
+            },
+            paymentMethod: 'card', // Changed from 'razorpay' to match enum
             paymentStatus: 'pending',
-            itemsPrice,
-            shippingPrice,
-            totalPrice,
-            orderStatus: 'pending',
+            subtotal: itemsPrice,
+            deliveryFee: shippingPrice,
+            discount: 0,
+            totalAmount: totalPrice,
+            status: 'pending',
+            orderId: 'ORD-' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase(),
+            orderNumber: 'ORD-' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase(),
         });
 
         // Create Razorpay order
         const razorpayOrder = await razorpay.orders.create({
             amount: totalPrice * 100, // Amount in paise
             currency: 'INR',
-            receipt: order.orderNumber,
+            receipt: (order as any).orderNumber, // Use orderNumber field
             notes: {
                 orderId: order._id.toString(),
             },
@@ -97,7 +104,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             orderId: order._id.toString(),
-            orderNumber: order.orderNumber,
+            orderNumber: (order as any).orderNumber, // Return orderNumber
             razorpayOrderId: razorpayOrder.id,
             amount: razorpayOrder.amount,
             currency: razorpayOrder.currency,

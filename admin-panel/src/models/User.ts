@@ -26,8 +26,7 @@ const UserSchema = new Schema<IUser>(
             unique: true,
             lowercase: true,
             trim: true,
-            match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],
-            index: true // Add index for faster lookups
+            match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
         },
         password: {
             type: String,
