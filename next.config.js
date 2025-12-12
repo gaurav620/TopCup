@@ -7,6 +7,7 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     images: {
+        domains: ['images.unsplash.com', 'res.cloudinary.com'],
         remotePatterns: [
             {
                 protocol: 'https',
@@ -17,6 +18,7 @@ const nextConfig = {
                 hostname: 'res.cloudinary.com',
             },
         ],
+        minimumCacheTTL: 60,
     },
 };
 
