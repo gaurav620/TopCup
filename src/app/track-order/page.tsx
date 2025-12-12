@@ -6,26 +6,42 @@ import Button from '@/components/ui/Button';
 
 export default function TrackOrderPage() {
     const [orderNumber, setOrderNumber] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [orderStatus, setOrderStatus] = useState<null | {
         number: string;
         status: string;
+        cancelled: boolean;
         steps: { title: string; time: string; completed: boolean }[];
     }>(null);
 
-    const handleTrack = () => {
-        // Demo tracking - in production, this would call an API
-        if (orderNumber.length >= 6) {
-            setOrderStatus({
-                number: orderNumber.toUpperCase(),
-                status: 'Out for Delivery',
-                steps: [
-                    { title: 'Order Placed', time: 'Dec 7, 2024 10:30 AM', completed: true },
-                    { title: 'Order Confirmed', time: 'Dec 7, 2024 10:35 AM', completed: true },
-                    { title: 'Preparing', time: 'Dec 7, 2024 11:00 AM', completed: true },
-                    { title: 'Out for Delivery', time: 'Dec 7, 2024 02:30 PM', completed: true },
-                    { title: 'Delivered', time: 'Expected by 4:00 PM', completed: false },
-                ],
-            });
+    const handleTrack = async () => {
+        if (orderNumber.length < 6) {
+            setError('Please enter a valid order number');
+            return;
+        }
+
+        setLoading(true);
+        setError('');
+        setOrderStatus(null);
+
+        try {
+            const response = await fetch(`/api/track-order?orderNumber=${encodeURIComponent(orderNumber)}`);
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError(data.error || 'Failed to track order');
+                return;
+            }
+
+            if (data.success) {
+                setOrderStatus(data.order);
+            }
+        } catch (err) {
+            console.error('Error tracking order:', err);
+            setError('Failed to track order. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,17 +66,32 @@ export default function TrackOrderPage() {
                                     type="text"
                                     placeholder="Enter order number (e.g., TC2412ABC123)"
                                     value={orderNumber}
-                                    onChange={(e) => setOrderNumber(e.target.value)}
+                                    onChange={(e) => {
+                                        setOrderNumber(e.target.value);
+                                        setError('');
+                                    }}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleTrack()}
                                     className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                                 />
                             </div>
-                            <Button size="lg" onClick={handleTrack}>
-                                Track
+                            <Button
+                                size="lg"
+                                onClick={handleTrack}
+                                disabled={loading}
+                            >
+                                {loading ? 'Tracking...' : 'Track'}
                             </Button>
                         </div>
-                        <p className="text-sm text-gray-500 mt-3">
-                            Your order number can be found in the order confirmation email or SMS
-                        </p>
+                        {error && (
+                            <p className="text-sm text-red-500 mt-3">
+                                {error}
+                            </p>
+                        )}
+                        {!error && (
+                            <p className="text-sm text-gray-500 mt-3">
+                                Your order number can be found in the order confirmation email or SMS
+                            </p>
+                        )}
                     </div>
 
                     {/* Order Status */}
@@ -71,7 +102,10 @@ export default function TrackOrderPage() {
                                     <p className="text-sm text-gray-500">Order Number</p>
                                     <p className="text-xl font-bold text-gray-900">{orderStatus.number}</p>
                                 </div>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full">
+                                <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${orderStatus.cancelled
+                                    ? 'bg-red-100 text-red-700'
+                                    : 'bg-green-100 text-green-700'
+                                    }`}>
                                     <Truck className="w-4 h-4" />
                                     <span className="font-medium">{orderStatus.status}</span>
                                 </div>
@@ -83,8 +117,8 @@ export default function TrackOrderPage() {
                                     <div key={step.title} className="flex gap-4">
                                         <div className="flex flex-col items-center">
                                             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step.completed
-                                                    ? 'bg-green-500 text-white'
-                                                    : 'bg-gray-200 text-gray-400'
+                                                ? 'bg-green-500 text-white'
+                                                : 'bg-gray-200 text-gray-400'
                                                 }`}>
                                                 {step.completed ? (
                                                     <CheckCircle className="w-5 h-5" />
