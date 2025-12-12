@@ -42,6 +42,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch with cache strategy
 self.addEventListener('fetch', (event) => {
+    // Skip HEAD requests and non-GET requests - they can't be cached
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
@@ -61,7 +66,10 @@ self.addEventListener('fetch', (event) => {
 
                     caches.open(CACHE_NAME)
                         .then((cache) => {
-                            cache.put(event.request, responseToCache);
+                            // Add error handling to prevent HEAD request errors
+                            cache.put(event.request, responseToCache).catch(err => {
+                                console.warn('Cache put failed:', event.request.url, err.message);
+                            });
                         });
 
                     return response;
