@@ -46,46 +46,41 @@ export async function GET(req: NextRequest) {
         };
 
         const currentStep = statusSteps[order.status as keyof typeof statusSteps] || 1;
+        const createdDate = new Date(order.createdAt);
+        const formatTime = (date: Date) => date.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
 
-        // Build tracking timeline
+        // Build tracking timeline with actual timestamps
         const steps = [
             {
                 title: 'Order Placed',
-                time: new Date(order.createdAt).toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                }),
+                time: formatTime(createdDate),
                 completed: currentStep >= 1
             },
             {
                 title: 'Order Confirmed',
-                time: currentStep >= 2 ? new Date(order.createdAt).toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                }) : 'Pending',
+                time: currentStep >= 2 ? formatTime(createdDate) : 'Waiting for confirmation',
                 completed: currentStep >= 2
             },
             {
-                title: 'Processing',
-                time: currentStep >= 3 ? 'In Progress' : 'Pending',
+                title: 'Preparing Your Order',
+                time: currentStep >= 3 ? 'Your order is being prepared' : 'Not started yet',
                 completed: currentStep >= 3
             },
             {
-                title: 'Shipped',
-                time: currentStep >= 4 ? 'Out for Delivery' : 'Pending',
+                title: 'Out for Delivery',
+                time: currentStep >= 4 ? 'On the way to you' : 'Not shipped yet',
                 completed: currentStep >= 4
             },
             {
                 title: 'Delivered',
-                time: currentStep >= 5 ? 'Delivered' : order.status === 'shipped' ? 'Expected Soon' : 'Pending',
+                time: currentStep >= 5 ? 'Delivered successfully' : currentStep === 4 ? 'Arriving soon' : 'Pending',
                 completed: currentStep >= 5
             }
         ];
