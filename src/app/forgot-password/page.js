@@ -40,10 +40,10 @@ export default function ForgotPassword() {
 
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">Check Your Email</h2>
                     <p className="text-gray-600 mb-8">
-                        We've sent password reset instructions to <strong>{email}</strong>
+                        We&apos;ve sent password reset instructions to <strong>{email}</strong>
                     </p>
                     <p className="text-sm text-gray-500 mb-8">
-                        Didn't receive an email? Check your spam folder or try again.
+                        Didn&apos;t receive an email? Check your spam folder or try again.
                     </p>
 
                     <div className="space-y-3">
@@ -102,7 +102,7 @@ export default function ForgotPassword() {
                         Forgot Password?
                     </h1>
                     <p className="text-gray-600">
-                        No worries! Enter your email and we'll send you reset instructions.
+                        No worries! Enter your email and we&apos;ll send you reset instructions.
                     </p>
                 </div>
 
@@ -144,7 +144,7 @@ export default function ForgotPassword() {
                 {/* Info box */}
                 <div className="mt-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-xl">
                     <p className="text-sm text-blue-800">
-                        💡 <strong>Tip:</strong> Check your spam folder if you don't see the email within a few minutes.
+                        💡 <strong>Tip:</strong> Check your spam folder if you don&apos;t see the email within a few minutes.
                     </p>
                 </div>
             </motion.div>

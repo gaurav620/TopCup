@@ -125,8 +125,8 @@ export default function AdminDashboard() {
                                 <div className={`w-10 h-10 rounded-lg ${action.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
                                     <action.icon className="w-5 h-5 text-white" />
                                 </div>
-                                <h3 className="font-semibold text-gray-900 mb-1">{action.title}</h3>
-                                <p className="text-xs text-gray-600">{action.desc}</p>
+                                <h3 className="text-xl font-semibold mb-2">Welcome to TopCup Admin</h3>
+                                <p className="text-gray-600">Monitor your bakery&apos;s performance and manage operations efficiently.</p>
                             </motion.div>
                         </Link>
                     ))}

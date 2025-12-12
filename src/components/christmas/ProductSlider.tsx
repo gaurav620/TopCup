@@ -124,8 +124,8 @@ export default function ProductSlider({ products, title = 'Featured Products' }:
                                                 <Star
                                                     key={i}
                                                     className={`w-4 h-4 ${i < Math.floor(product.averageRating)
-                                                            ? 'fill-yellow-400 text-yellow-400'
-                                                            : 'text-gray-300'
+                                                        ? 'fill-yellow-400 text-yellow-400'
+                                                        : 'text-gray-300'
                                                         }`}
                                                 />
                                             ))}
@@ -156,7 +156,7 @@ export default function ProductSlider({ products, title = 'Featured Products' }:
 
             {loaded && instanceRef.current && (
                 <div className="slider-dots">
-                    {[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => (
+                    {Array.from({ length: instanceRef.current.track.details.slides.length }, (_, idx) => (
                         <button
                             key={idx}
                             onClick={() => instanceRef.current?.moveToIdx(idx)}
