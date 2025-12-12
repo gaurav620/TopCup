@@ -13,6 +13,7 @@ export default function TrackOrderPage() {
         status: string;
         cancelled: boolean;
         steps: { title: string; time: string; completed: boolean }[];
+        cancellationMessage?: string;
     }>(null);
 
     const handleTrack = async () => {
@@ -141,6 +142,18 @@ export default function TrackOrderPage() {
                                     </div>
                                 ))}
                             </div>
+
+                            {/* Cancellation Message */}
+                            {orderStatus.cancelled && orderStatus.cancellationMessage && (
+                                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+                                    <p className="text-sm text-red-800">
+                                        <strong>Note:</strong> {orderStatus.cancellationMessage}
+                                    </p>
+                                    <p className="text-sm text-red-700 mt-2">
+                                        Need help? <a href="/contact" className="underline font-medium">Contact Support</a>
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )}
 

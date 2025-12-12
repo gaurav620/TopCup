@@ -85,26 +85,27 @@ export async function GET(req: NextRequest) {
             }
         ];
 
-        // Handle cancelled orders
+        // Handle cancelled orders with detailed timeline
         if (order.status === 'cancelled') {
             return NextResponse.json({
                 success: true,
                 order: {
                     number: order.orderNumber || order.orderId,
-                    status: 'Cancelled',
+                    status: 'Order Cancelled',
                     cancelled: true,
-                    steps: [{
-                        title: 'Order Cancelled',
-                        time: new Date(order.createdAt).toLocaleString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            hour12: true
-                        }),
-                        completed: true
-                    }]
+                    steps: [
+                        {
+                            title: 'Order Placed',
+                            time: formatTime(createdDate),
+                            completed: true
+                        },
+                        {
+                            title: 'Order Cancelled',
+                            time: formatTime(createdDate),
+                            completed: true
+                        }
+                    ],
+                    cancellationMessage: 'Your order has been cancelled. If you did not request this cancellation, please contact our support team.'
                 }
             });
         }
