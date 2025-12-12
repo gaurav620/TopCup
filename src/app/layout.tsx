@@ -29,9 +29,11 @@ export const metadata: Metadata = {
     applicationName: 'TopCup',
     manifest: '/manifest.json',
     appleWebApp: {
-        capable: true,
         statusBarStyle: 'default',
         title: 'TopCup',
+    },
+    other: {
+        'mobile-web-app-capable': 'yes',
     },
     formatDetection: {
         telephone: false,
