@@ -128,7 +128,7 @@ export async function GET(request: NextRequest) {
             .lean();
 
         return NextResponse.json({
-            orders: orders.map(order => ({
+            orders: orders.map((order: any) => ({
                 ...order,
                 _id: order._id.toString(),
                 orderNumber: order.orderNumber || order.orderId,  // Fallback to orderId

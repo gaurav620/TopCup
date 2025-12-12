@@ -20,7 +20,7 @@ export async function GET(
         await dbConnect();
 
         // Fetch the order
-        const order = await Order.findById(params.id).lean();
+        const order = await Order.findById(params.id).lean() as any;
 
         if (!order) {
             return NextResponse.json({ error: 'Order not found' }, { status: 404 });
@@ -35,8 +35,8 @@ export async function GET(
             order: {
                 ...order,
                 _id: order._id.toString(),
-                orderNumber: order.orderNumber || order.orderId,
-                totalPrice: order.totalAmount || order.totalPrice,
+                orderNumber: order.orderNumber || (order as any).orderId,
+                totalPrice: (order as any).totalAmount || order.totalPrice,
             },
         });
     } catch (error: any) {
