@@ -1,0 +1,212 @@
+{
+    "nav": {
+        "home": "होम",
+        "products": "उत्पाद",
+        "categories": "श्रेणियाँ",
+        "cakes": "केक",
+        "cookies": "कुकीज़",
+        "pastries": "पेस्ट्री",
+        "trackOrder": "ऑर्डर ट्रैक करें",
+        "cart": "कार्ट",
+        "login": "लॉगिन",
+        "signup": "साइन अप",
+        "logout": "लॉगआउट",
+        "myOrders": "मेरे ऑर्डर",
+        "profile": "प्रोफाइल"
+    },
+    "buttons": {
+        "addToCart": "कार्ट में जोड़ें",
+        "buyNow": "अभी खरीदें",
+        "checkout": "चेकआउट",
+        "placeOrder": "ऑर्डर दें",
+        "viewMore": "और देखें",
+        "loadMore": "और लोड करें",
+        "viewDetails": "विवरण देखें",
+        "continueShopping": "खरीदारी जारी रखें",
+        "proceedToCheckout": "चेकआउट पर जाएं",
+        "apply": "लागू करें",
+        "remove": "हटाएं",
+        "update": "अपडेट करें",
+        "track": "ट्रैक करें"
+    },
+    "common": {
+        "search": "खोजें",
+        "searchPlaceholder": "केक, कुकीज़ खोजें...",
+        "filters": "फ़िल्टर",
+        "sortBy": "क्रमबद्ध करें",
+        "price": "कीमत",
+        "save": "सहेजें",
+        "cancel": "रद्द करें",
+        "delete": "हटाएं",
+        "edit": "संपादित करें",
+        "quantity": "मात्रा",
+        "total": "कुल",
+        "subtotal": "उप-योग",
+        "deliveryFee": "डिलीवरी शुल्क",
+        "discount": "छूट",
+        "grandTotal": "कुल योग",
+        "free": "मुफ़्त",
+        "bestseller": "बेस्टसेलर",
+        "new": "नया",
+        "outOfStock": "स्टॉक में नहीं"
+    },
+    "home": {
+        "hero": {
+            "title": "प्यार से ताज़ा बेक किया गया",
+            "subtitle": "स्वादिष्ट केक, कुकीज़ और पेस्ट्री घर पर मंगाएं",
+            "cta": "अभी ऑर्डर करें"
+        },
+        "features": {
+            "title": "TopCup क्यों चुनें?",
+            "fresh": {
+                "title": "100% ताज़ा",
+                "description": "प्रीमियम सामग्री से रोज़ाना ताज़ा बेक किया जाता है"
+            },
+            "delivery": {
+                "title": "तेज़ डिलीवरी",
+                "description": "पूरे शहर में उसी दिन डिलीवरी"
+            },
+            "quality": {
+                "title": "प्रीमियम गुणवत्ता",
+                "description": "विशेषज्ञ बेकर्स द्वारा बनाया गया"
+            }
+        },
+        "bestsellers": "बेस्ट सेलर",
+        "shopNow": "अभी खरीदें"
+    },
+    "products": {
+        "title": "हमारे उत्पाद",
+        "noProducts": "कोई उत्पाद नहीं मिला",
+        "showingResults": "{{count}} उत्पाद दिख रहे हैं",
+        "sortBy": {
+            "label": "क्रमबद्ध करें",
+            "featured": "फ़ीचर्ड",
+            "priceLowHigh": "कीमत: कम से ज़्यादा",
+            "priceHighLow": "कीमत: ज़्यादा से कम",
+            "newest": "नवीनतम पहले",
+            "popular": "सबसे लोकप्रिय"
+        },
+        "filters": {
+            "category": "श्रेणी",
+            "priceRange": "कीमत सीमा",
+            "availability": "उपलब्धता",
+            "rating": "रेटिंग"
+        }
+    },
+    "productDetail": {
+        "weight": "वज़न",
+        "serves": "सर्विंग",
+        "ingredients": "सामग्री",
+        "reviews": "समीक्षाएं",
+        "customerReviews": "ग्राहक समीक्षाएं",
+        "writeReview": "समीक्षा लिखें",
+        "relatedProducts": "आपको यह भी पसंद आ सकता है",
+        "addedToCart": "{{name}} कार्ट में जोड़ा गया!",
+        "features": {
+            "freeDelivery": "मुफ़्त डिलीवरी",
+            "fresh": "100% ताज़ा",
+            "easyReturns": "आसान रिटर्न"
+        }
+    },
+    "cart": {
+        "title": "शॉपिंग कार्ट",
+        "empty": "आपका कार्ट खाली है",
+        "emptyMessage": "शुरू करने के लिए कुछ स्वादिष्ट आइटम जोड़ें!",
+        "item": "आइटम",
+        "items": "आइटम",
+        "removeItem": "आइटम हटाएं",
+        "updateQuantity": "मात्रा अपडेट करें",
+        "couponCode": "कूपन कोड",
+        "applyCoupon": "कूपन लागू करें",
+        "couponApplied": "कूपन सफलतापूर्वक लागू हुआ!",
+        "invalidCoupon": "अमान्य कूपन कोड"
+    },
+    "checkout": {
+        "title": "चेकआउट",
+        "deliveryAddress": "डिलीवरी पता",
+        "paymentMethod": "भुगतान विधि",
+        "orderSummary": "ऑर्डर सारांश",
+        "cashOnDelivery": "कैश ऑन डिलीवरी",
+        "onlinePayment": "ऑनलाइन भुगतान",
+        "cardPayment": "कार्ड भुगतान",
+        "upiPayment": "UPI भुगतान",
+        "form": {
+            "fullName": "पूरा नाम",
+            "phone": "फ़ोन नंबर",
+            "email": "ईमेल पता",
+            "street": "स्ट्रीट पता",
+            "city": "शहर",
+            "state": "राज्य",
+            "zipCode": "पिन कोड",
+            "landmark": "लैंडमार्क (वैकल्पिक)",
+            "required": "यह फ़ील्ड आवश्यक है",
+            "invalidEmail": "अमान्य ईमेल पता",
+            "invalidPhone": "अमान्य फ़ोन नंबर"
+        },
+        "orderPlaced": "ऑर्डर सफलतापूर्वक दिया गया!",
+        "orderFailed": "ऑर्डर देने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "trackOrder": {
+        "title": "अपना ऑर्डर ट्रैक करें",
+        "subtitle": "डिलीवरी स्थिति देखने के लिए अपना ऑर्डर नंबर दर्ज करें",
+        "orderNumber": "ऑर्डर नंबर",
+        "placeholder": "ऑर्डर नंबर दर्ज करें (उदा. TC2412ABC123)",
+        "notFound": "ऑर्डर नहीं मिला। कृपया अपना ऑर्डर नंबर जांचें।",
+        "status": {
+            "pending": "ऑर्डर दिया गया",
+            "confirmed": "ऑर्डर कन्फर्म",
+            "preparing": "आपका ऑर्डर तैयार हो रहा है",
+            "ready": "पिकअप के लिए तैयार",
+            "outForDelivery": "डिलीवरी के लिए निकला",
+            "delivered": "डिलीवर हो गया",
+            "cancelled": "ऑर्डर रद्द"
+        },
+        "timeline": {
+            "orderPlaced": "ऑर्डर दिया गया",
+            "confirmed": "ऑर्डर कन्फर्म",
+            "preparing": "आपका ऑर्डर तैयार हो रहा है",
+            "ready": "पिकअप के लिए तैयार",
+            "shipping": "डिलीवरी के लिए निकला",
+            "delivered": "डिलीवर हो गया"
+        },
+        "help": "अपने ऑर्डर में समस्या है?",
+        "contactSupport": "सपोर्ट से संपर्क करें"
+    },
+    "footer": {
+        "company": {
+            "title": "कंपनी",
+            "about": "हमारे बारे में",
+            "contact": "संपर्क",
+            "careers": "करियर",
+            "blog": "ब्लॉग"
+        },
+        "help": {
+            "title": "मदद",
+            "faq": "सामान्य प्रश्न",
+            "shipping": "शिपिंग",
+            "returns": "रिटर्न",
+            "trackOrder": "ऑर्डर ट्रैक करें"
+        },
+        "legal": {
+            "title": "कानूनी",
+            "privacy": "गोपनीयता नीति",
+            "terms": "सेवा की शर्तें",
+            "cookies": "कुकी नीति"
+        },
+        "copyright": "© {{year}} TopCup. सर्वाधिकार सुरक्षित।",
+        "madeWith": "भारत में ❤️ के साथ बनाया गया"
+    },
+    "messages": {
+        "success": {
+            "addedToCart": "कार्ट में जोड़ा गया!",
+            "orderPlaced": "ऑर्डर सफलतापूर्वक दिया गया!",
+            "profileUpdated": "प्रोफाइल अपडेट हो गया!",
+            "passwordChanged": "पासवर्ड बदल गया!"
+        },
+        "error": {
+            "somethingWrong": "कु छ गलत हुआ",
+            "tryAgain": "कृपया पुनः प्रयास करें",
+            "networkError": "नेटवर्क त्रुटि। अपना कनेक्शन जांचें।"
+        }
+    }
+}

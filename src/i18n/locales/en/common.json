@@ -1,0 +1,212 @@
+{
+    "nav": {
+        "home": "Home",
+        "products": "Products",
+        "categories": "Categories",
+        "cakes": "Cakes",
+        "cookies": "Cookies",
+        "pastries": "Pastries",
+        "trackOrder": "Track Order",
+        "cart": "Cart",
+        "login": "Login",
+        "signup": "Sign Up",
+        "logout": "Logout",
+        "myOrders": "My Orders",
+        "profile": "Profile"
+    },
+    "buttons": {
+        "addToCart": "Add to Cart",
+        "buyNow": "Buy Now",
+        "checkout": "Checkout",
+        "placeOrder": "Place Order",
+        "viewMore": "View More",
+        "loadMore": "Load More",
+        "viewDetails": "View Details",
+        "continueShopping": "Continue Shopping",
+        "proceedToCheckout": "Proceed to Checkout",
+        "apply": "Apply",
+        "remove": "Remove",
+        "update": "Update",
+        "track": "Track"
+    },
+    "common": {
+        "search": "Search",
+        "searchPlaceholder": "Search for cakes, cookies...",
+        "filters": "Filters",
+        "sortBy": "Sort By",
+        "price": "Price",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "quantity": "Quantity",
+        "total": "Total",
+        "subtotal": "Subtotal",
+        "deliveryFee": "Delivery Fee",
+        "discount": "Discount",
+        "grandTotal": "Grand Total",
+        "free": "Free",
+        "bestseller": "Bestseller",
+        "new": "New",
+        "outOfStock": "Out of Stock"
+    },
+    "home": {
+        "hero": {
+            "title": "Freshly Baked with Love",
+            "subtitle": "Order delicious cakes, cookies & pastries delivered to your doorstep",
+            "cta": "Order Now"
+        },
+        "features": {
+            "title": "Why Choose TopCup?",
+            "fresh": {
+                "title": "100% Fresh",
+                "description": "Baked fresh daily with premium ingredients"
+            },
+            "delivery": {
+                "title": "Fast Delivery",
+                "description": "Same day delivery across the city"
+            },
+            "quality": {
+                "title": "Premium Quality",
+                "description": "Made by expert bakers"
+            }
+        },
+        "bestsellers": "Best Sellers",
+        "shopNow": "Shop Now"
+    },
+    "products": {
+        "title": "Our Products",
+        "noProducts": "No products found",
+        "showingResults": "Showing {{count}} products",
+        "sortBy": {
+            "label": "Sort By",
+            "featured": "Featured",
+            "priceLowHigh": "Price: Low to High",
+            "priceHighLow": "Price: High to Low",
+            "newest": "Newest First",
+            "popular": "Most Popular"
+        },
+        "filters": {
+            "category": "Category",
+            "priceRange": "Price Range",
+            "availability": "Availability",
+            "rating": "Rating"
+        }
+    },
+    "productDetail": {
+        "weight": "Weight",
+        "serves": "Serves",
+        "ingredients": "Ingredients",
+        "reviews": "Reviews",
+        "customerReviews": "Customer Reviews",
+        "writeReview": "Write a Review",
+        "relatedProducts": "You May Also Like",
+        "addedToCart": "{{name}} added to cart!",
+        "features": {
+            "freeDelivery": "Free Delivery",
+            "fresh": "100% Fresh",
+            "easyReturns": "Easy Returns"
+        }
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "emptyMessage": "Add some delicious items to get started!",
+        "item": "Item",
+        "items": "Items",
+        "removeItem": "Remove item",
+        "updateQuantity": "Update quantity",
+        "couponCode": "Coupon Code",
+        "applyCoupon": "Apply Coupon",
+        "couponApplied": "Coupon applied successfully!",
+        "invalidCoupon": "Invalid coupon code"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "deliveryAddress": "Delivery Address",
+        "paymentMethod": "Payment Method",
+        "orderSummary": "Order Summary",
+        "cashOnDelivery": "Cash on Delivery",
+        "onlinePayment": "Online Payment",
+        "cardPayment": "Card Payment",
+        "upiPayment": "UPI Payment",
+        "form": {
+            "fullName": "Full Name",
+            "phone": "Phone Number",
+            "email": "Email Address",
+            "street": "Street Address",
+            "city": "City",
+            "state": "State",
+            "zipCode": "Zip Code",
+            "landmark": "Landmark (Optional)",
+            "required": "This field is required",
+            "invalidEmail": "Invalid email address",
+            "invalidPhone": "Invalid phone number"
+        },
+        "orderPlaced": "Order placed successfully!",
+        "orderFailed": "Failed to place order. Please try again."
+    },
+    "trackOrder": {
+        "title": "Track Your Order",
+        "subtitle": "Enter your order number to see delivery status",
+        "orderNumber": "Order Number",
+        "placeholder": "Enter order number (e.g., TC2412ABC123)",
+        "notFound": "Order not found. Please check your order number.",
+        "status": {
+            "pending": "Order Placed",
+            "confirmed": "Order Confirmed",
+            "preparing": "Preparing Your Order",
+            "ready": "Ready for Pickup",
+            "outForDelivery": "Out for Delivery",
+            "delivered": "Delivered",
+            "cancelled": "Order Cancelled"
+        },
+        "timeline": {
+            "orderPlaced": "Order Placed",
+            "confirmed": "Order Confirmed",
+            "preparing": "Preparing Your Order",
+            "ready": "Ready for Pickup",
+            "shipping": "Out for Delivery",
+            "delivered": "Delivered"
+        },
+        "help": "Having issues with your order?",
+        "contactSupport": "Contact Support"
+    },
+    "footer": {
+        "company": {
+            "title": "Company",
+            "about": "About Us",
+            "contact": "Contact",
+            "careers": "Careers",
+            "blog": "Blog"
+        },
+        "help": {
+            "title": "Help",
+            "faq": "FAQ",
+            "shipping": "Shipping",
+            "returns": "Returns",
+            "trackOrder": "Track Order"
+        },
+        "legal": {
+            "title": "Legal",
+            "privacy": "Privacy Policy",
+            "terms": "Terms of Service",
+            "cookies": "Cookie Policy"
+        },
+        "copyright": "© {{year}} TopCup. All rights reserved.",
+        "madeWith": "Made with ❤️ in India"
+    },
+    "messages": {
+        "success": {
+            "addedToCart": "Added to cart!",
+            "orderPlaced": "Order placed successfully!",
+            "profileUpdated": "Profile updated!",
+            "passwordChanged": "Password changed!"
+        },
+        "error": {
+            "somethingWrong": "Something went wrong",
+            "tryAgain": "Please try again",
+            "networkError": "Network error. Check your connection."
+        }
+    }
+}

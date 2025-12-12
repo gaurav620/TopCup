@@ -22,6 +22,7 @@ import {
     Sparkles,
 } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const categories = [
     { name: 'Cakes', href: '/category/cakes', icon: Cake, color: 'text-pink-500' },
@@ -121,6 +122,11 @@ export default function Navbar() {
                             >
                                 <Search className="w-5 h-5 text-gray-700" />
                             </button>
+
+                            {/* Language Switcher */}
+                            <div className="hidden md:block">
+                                <LanguageSwitcher />
+                            </div>
 
                             {/* Wishlist */}
                             <Link

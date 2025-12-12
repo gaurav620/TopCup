@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
 import AuthProvider from '@/components/providers/AuthProvider';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const outfit = Outfit({
     subsets: ['latin'],
@@ -91,36 +92,38 @@ export default function RootLayout({
                 />
             </head>
             <body className="min-h-screen flex flex-col">
-                <AuthProvider>
-                    <Toaster
-                        position="top-center"
-                        toastOptions={{
-                            duration: 3000,
-                            style: {
-                                background: '#fff',
-                                color: '#1a1a1a',
-                                borderRadius: '12px',
-                                padding: '16px',
-                                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
-                            },
-                            success: {
-                                iconTheme: {
-                                    primary: '#22c55e',
-                                    secondary: '#fff',
+                <LanguageProvider>
+                    <AuthProvider>
+                        <Toaster
+                            position="top-center"
+                            toastOptions={{
+                                duration: 3000,
+                                style: {
+                                    background: '#fff',
+                                    color: '#1a1a1a',
+                                    borderRadius: '12px',
+                                    padding: '16px',
+                                    boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
                                 },
-                            },
-                            error: {
-                                iconTheme: {
-                                    primary: '#ef4444',
-                                    secondary: '#fff',
+                                success: {
+                                    iconTheme: {
+                                        primary: '#22c55e',
+                                        secondary: '#fff',
+                                    },
                                 },
-                            },
-                        }}
-                    />
-                    <Navbar />
-                    <main className="flex-1">{children}</main>
-                    <Footer />
-                </AuthProvider>
+                                error: {
+                                    iconTheme: {
+                                        primary: '#ef4444',
+                                        secondary: '#fff',
+                                    },
+                                },
+                            }}
+                        />
+                        <Navbar />
+                        <main className="flex-1">{children}</main>
+                        <Footer />
+                    </AuthProvider>
+                </LanguageProvider>
             </body>
         </html>
     );
