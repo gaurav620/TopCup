@@ -103,6 +103,32 @@ const PRODUCTS_DB: Record<string, any> = {
         deliveryInfo: 'Same day delivery available',
         reviews: [],
     },
+    'black-forest-cake': {
+        _id: '5',
+        name: 'Black Forest Cake',
+        slug: 'black-forest-cake',
+        description: 'Classic German Black Forest cake with layers of chocolate sponge, whipped cream, and cherries. A timeless favorite that combines rich chocolate with fresh cherry flavor.',
+        shortDescription: 'Chocolate sponge with cherries and cream',
+        price: 800,
+        discountPrice: 400,
+        category: 'cakes',
+        subcategory: 'Chocolate Cakes',
+        images: [
+            'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=800',
+            'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800',
+        ],
+        weight: '500g',
+        servings: '8-10 people',
+        ingredients: ['Chocolate Sponge', 'Whipped Cream', 'Cherries', 'Dark Chocolate'],
+        averageRating: 4.5,
+        totalReviews: 89,
+        isBestseller: false,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [
+            { user: 'Amit K.', rating: 5, comment: 'Love the cherry flavor! Perfect balance.', date: '2 days ago' },
+            { user: 'Sonia R.', rating: 4, comment: 'Good taste, fresh cherries used.', date: '5 days ago' },
+        ],
+    },
 };
 
 const relatedProducts: Product[] = [
@@ -239,8 +265,8 @@ export default function ProductDetailPage() {
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
                                         className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${selectedImage === idx
-                                                ? 'border-primary-500 scale-105'
-                                                : 'border-transparent hover:border-gray-300'
+                                            ? 'border-primary-500 scale-105'
+                                            : 'border-transparent hover:border-gray-300'
                                             }`}
                                     >
                                         <Image src={img} alt="" width={150} height={150} className="w-full h-full object-cover" />
@@ -263,8 +289,8 @@ export default function ProductDetailPage() {
                                         <Star
                                             key={i}
                                             className={`w-5 h-5 ${i < Math.floor(product.averageRating)
-                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'text-gray-300'
+                                                ? 'fill-yellow-400 text-yellow-400'
+                                                : 'text-gray-300'
                                                 }`}
                                         />
                                     ))}
