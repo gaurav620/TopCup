@@ -41,11 +41,12 @@ export async function GET(req: NextRequest) {
             confirmed: 2,
             processing: 3,
             shipped: 4,
+            out_for_delivery: 4,  // Support both shipped and out_for_delivery
             delivered: 5,
             cancelled: 0
         };
 
-        const currentStep = statusSteps[order.status as keyof typeof statusSteps] || 1;
+        const currentStep = statusSteps[(order as any).orderStatus as keyof typeof statusSteps] || 1;
         const createdDate = new Date(order.createdAt);
         const formatTime = (date: Date) => date.toLocaleString('en-US', {
             month: 'short',
@@ -86,7 +87,7 @@ export async function GET(req: NextRequest) {
         ];
 
         // Handle cancelled orders with detailed timeline
-        if (order.status === 'cancelled') {
+        if ((order as any).orderStatus === 'cancelled') {
             return NextResponse.json({
                 success: true,
                 order: {
@@ -111,19 +112,20 @@ export async function GET(req: NextRequest) {
         }
 
         // Map status to display name
-        const statusDisplay = {
+        const statusDisplay: Record<string, string> = {
             pending: 'Order Placed',
             confirmed: 'Order Confirmed',
             processing: 'Preparing Your Order',
             shipped: 'Out for Delivery',
+            out_for_delivery: 'Out for Delivery',
             delivered: 'Delivered'
         };
 
         return NextResponse.json({
             success: true,
             order: {
-                number: order.orderNumber || order.orderId,
-                status: statusDisplay[order.status as keyof typeof statusDisplay] || 'Processing',
+                number: (order as any).orderNumber || (order as any).orderId,
+                status: statusDisplay[(order as any).orderStatus] || 'Processing',
                 cancelled: false,
                 steps
             }
