@@ -101,8 +101,7 @@ const orderSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Indexes for performance
-orderSchema.index({ orderId: 1 });
+// Indexes for performance (orderId already indexed via unique:true)
 orderSchema.index({ 'customer.email': 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ deliveryPartner: 1 });
