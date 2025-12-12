@@ -3,10 +3,12 @@
 import { useLanguage } from '@/context/LanguageContext';
 import en from '@/i18n/locales/en/common.json';
 import hi from '@/i18n/locales/hi/common.json';
+import bn from '@/i18n/locales/bn/common.json';
 
 const translations = {
     en,
     hi,
+    bn,
 };
 
 type TranslationKey = string;

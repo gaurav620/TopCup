@@ -7,6 +7,7 @@ import { Filter, SlidersHorizontal, X } from 'lucide-react';
 import ProductCard, { Product } from '@/components/product/ProductCard';
 import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 // Sample products - in production, fetch from API
 const allProducts: Product[] = [
@@ -46,27 +47,32 @@ const allProducts: Product[] = [
     { _id: '25', name: 'Romantic Date Night', slug: 'romantic-date-night', price: 3800, discountPrice: 1900, images: ['https://images.unsplash.com/photo-1587668178277-295251f900ce?w=500'], category: 'combos', averageRating: 4.9, totalReviews: 112, isBestseller: true },
 ];
 
-const categories = [
-    { value: '', label: 'All Categories' },
-    { value: 'cakes', label: 'Cakes' },
-    { value: 'gifts', label: 'Gifts' },
-    { value: 'snacks', label: 'Snacks' },
-    { value: 'combos', label: 'Combos' },
-];
 
-const sortOptions = [
-    { value: 'newest', label: 'Newest First' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'rating', label: 'Highest Rated' },
-    { value: 'popular', label: 'Most Popular' },
-];
+
+
 
 function ProductsContent() {
+    const { t } = useTranslation();
     const searchParams = useSearchParams();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
+
+    const categories = [
+        { value: '', label: t('products.filters.category') + ': ' + t('nav.products') },
+        { value: 'cakes', label: t('nav.cakes') },
+        { value: 'gifts', label: t('common.gifts') || 'Gifts' },
+        { value: 'snacks', label: t('common.snacks') || 'Snacks' },
+        { value: 'combos', label: t('common.combos') || 'Combos' },
+    ];
+
+    const sortOptions = [
+        { value: 'newest', label: t('products.sortBy.newest') },
+        { value: 'price-low', label: t('products.sortBy.priceLowHigh') },
+        { value: 'price-high', label: t('products.sortBy.priceHighLow') },
+        { value: 'rating', label: t('common.rating') || 'Highest Rated' },
+        { value: 'popular', label: t('products.sortBy.popular') },
+    ];
 
     // Filter states
     const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
@@ -127,10 +133,10 @@ function ProductsContent() {
             <div className="bg-white border-b border-gray-100">
                 <div className="container-custom py-6">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        {searchQuery ? `Search: "${searchQuery}"` : selectedCategory ? categories.find(c => c.value === selectedCategory)?.label : 'All Products'}
+                        {searchQuery ? `${t('common.search')}: "${searchQuery}"` : selectedCategory ? categories.find(c => c.value === selectedCategory)?.label : t('products.title')}
                     </h1>
                     <p className="text-gray-600">
-                        {products.length} products found
+                        {t('products.showingResults', { count: products.length.toString() })}
                     </p>
                 </div>
             </div>
@@ -142,12 +148,12 @@ function ProductsContent() {
                         <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-24">
                             <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                 <SlidersHorizontal className="w-5 h-5" />
-                                Filters
+                                {t('common.filters')}
                             </h3>
 
                             {/* Category Filter */}
                             <div className="mb-6">
-                                <h4 className="text-sm font-medium text-gray-700 mb-3">Category</h4>
+                                <h4 className="text-sm font-medium text-gray-700 mb-3">{t('products.filters.category')}</h4>
                                 <div className="space-y-2">
                                     {categories.map((cat) => (
                                         <label key={cat.value} className="flex items-center gap-2 cursor-pointer">
@@ -166,7 +172,7 @@ function ProductsContent() {
 
                             {/* Price Range */}
                             <div className="mb-6">
-                                <h4 className="text-sm font-medium text-gray-700 mb-3">Price Range</h4>
+                                <h4 className="text-sm font-medium text-gray-700 mb-3">{t('products.filters.priceRange')}</h4>
                                 <div className="flex gap-2">
                                     <input
                                         type="number"
@@ -194,7 +200,7 @@ function ProductsContent() {
                                     setPriceRange({ min: '', max: '' });
                                 }}
                             >
-                                Clear Filters
+                                {t('common.filters')} {t('common.cancel')}
                             </Button>
                         </div>
                     </div>
@@ -208,11 +214,11 @@ function ProductsContent() {
                                 className="lg:hidden flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm text-gray-700 font-medium"
                             >
                                 <Filter className="w-5 h-5" />
-                                Filters
+                                {t('common.filters')}
                             </button>
 
                             <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-500 hidden sm:block">Sort by:</span>
+                                <span className="text-sm text-gray-500 hidden sm:block">{t('common.sortBy')}:</span>
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
@@ -234,12 +240,12 @@ function ProductsContent() {
                             </div>
                         ) : products.length === 0 ? (
                             <div className="text-center py-20">
-                                <p className="text-xl text-gray-500 mb-4">No products found</p>
+                                <p className="text-xl text-gray-500 mb-4">{t('products.noProducts')}</p>
                                 <Button onClick={() => {
                                     setSelectedCategory('');
                                     setPriceRange({ min: '', max: '' });
                                 }}>
-                                    Clear Filters
+                                    {t('common.cancel')} {t('common.filters')}
                                 </Button>
                             </div>
                         ) : (
@@ -271,7 +277,7 @@ function ProductsContent() {
                         className="absolute right-0 top-0 bottom-0 w-80 bg-white p-6 overflow-y-auto"
                     >
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="font-semibold text-lg">Filters</h3>
+                            <h3 className="font-semibold text-lg">{t('common.filters')}</h3>
                             <button onClick={() => setShowFilters(false)}>
                                 <X className="w-6 h-6" />
                             </button>
@@ -279,7 +285,7 @@ function ProductsContent() {
 
                         {/* Category */}
                         <div className="mb-6">
-                            <h4 className="font-medium mb-3">Category</h4>
+                            <h4 className="font-medium mb-3">{t('products.filters.category')}</h4>
                             <div className="space-y-2">
                                 {categories.map((cat) => (
                                     <label key={cat.value} className="flex items-center gap-2">
@@ -298,7 +304,7 @@ function ProductsContent() {
 
                         {/* Price */}
                         <div className="mb-6">
-                            <h4 className="font-medium mb-3">Price Range</h4>
+                            <h4 className="font-medium mb-3">{t('products.filters.priceRange')}</h4>
                             <div className="flex gap-2">
                                 <input
                                     type="number"
@@ -326,10 +332,10 @@ function ProductsContent() {
                                     setPriceRange({ min: '', max: '' });
                                 }}
                             >
-                                Clear
+                                {t('common.cancel')}
                             </Button>
                             <Button fullWidth onClick={() => setShowFilters(false)}>
-                                Apply
+                                {t('buttons.apply')}
                             </Button>
                         </div>
                     </motion.div>

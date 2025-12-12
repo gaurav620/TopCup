@@ -1,0 +1,216 @@
+{
+    "nav": {
+        "home": "হোম",
+        "products": "পণ্য",
+        "categories": "বিভাগ",
+        "cakes": "কেক",
+        "cookies": "কুকিজ",
+        "pastries": "পেস্ট্রি",
+        "trackOrder": "অর্ডার ট্র্যাক করুন",
+        "cart": "কার্ট",
+        "login": "লগইন",
+        "signup": "সাইন আপ",
+        "logout": "লগআউট",
+        "myOrders": "আমার অর্ডার",
+        "profile": "প্রোফাইল"
+    },
+    "buttons": {
+        "addToCart": "কার্টে যোগ করুন",
+        "buyNow": "এখনই কিনুন",
+        "checkout": "চেকআউট",
+        "placeOrder": "অর্ডার দিন",
+        "viewMore": "আরও দেখুন",
+        "loadMore": "আরও লোড করুন",
+        "viewDetails": "বিস্তারিত দেখুন",
+        "continueShopping": "কেনাকাটা চালিয়ে যান",
+        "proceedToCheckout": "চেকআউটে যান",
+        "apply": "প্রয়োগ করুন",
+        "remove": "সরান",
+        "update": "আপডেট করুন",
+        "track": "ট্র্যাক করুন"
+    },
+    "common": {
+        "search": "খুঁজুন",
+        "searchPlaceholder": "কেক, কুকিজ খুঁজুন...",
+        "filters": "ফিল্টার",
+        "sortBy": "সাজান",
+        "price": "মূল্য",
+        "save": "সংরক্ষণ করুন",
+        "cancel": "বাতিল করুন",
+        "delete": "মুছে ফেলুন",
+        "edit": "সম্পাদনা করুন",
+        "quantity": "পরিমাণ",
+        "total": "মোট",
+        "subtotal": "উপমোট",
+        "deliveryFee": "ডেলিভারি ফি",
+        "discount": "ছাড়",
+        "grandTotal": "সর্বমোট",
+        "free": "বিনামূল্যে",
+        "bestseller": "বেস্টসেলার",
+        "new": "নতুন",
+        "outOfStock": "স্টকে নেই",
+        "gifts": "গিফট",
+        "snacks": "স্ন্যাকস",
+        "combos": "কম্বো",
+        "rating": "রেটিং"
+    },
+    "home": {
+        "hero": {
+            "title": "ভালোবাসা দিয়ে তাজা বেক করা",
+            "subtitle": "সুস্বাদু কেক, কুকিজ এবং পেস্ট্রি বাড়িতে অর্ডার করুন",
+            "cta": "এখনই অর্ডার করুন"
+        },
+        "features": {
+            "title": "TopCup কেন বেছে নেবেন?",
+            "fresh": {
+                "title": "১০০% তাজা",
+                "description": "প্রিমিয়াম উপাদান দিয়ে প্রতিদিন তাজা বেক করা"
+            },
+            "delivery": {
+                "title": "দ্রুত ডেলিভারি",
+                "description": "সারা শহরে একই দিনে ডেলিভারি"
+            },
+            "quality": {
+                "title": "প্রিমিয়াম মান",
+                "description": "বিশেষজ্ঞ বেকারদের দ্বারা তৈরি"
+            }
+        },
+        "bestsellers": "বেস্ট সেলার",
+        "shopNow": "এখনই কিনুন"
+    },
+    "products": {
+        "title": "আমাদের পণ্য",
+        "noProducts": "কোনো পণ্য পাওয়া যায়নি",
+        "showingResults": "{{count}} পণ্য দেখানো হচ্ছে",
+        "sortBy": {
+            "label": "সাজান",
+            "featured": "ফিচার্ড",
+            "priceLowHigh": "মূল্য: কম থেকে বেশি",
+            "priceHighLow": "মূল্য: বেশি থেকে কম",
+            "newest": "নতুনতম প্রথম",
+            "popular": "সবচেয়ে জনপ্রিয়"
+        },
+        "filters": {
+            "category": "বিভাগ",
+            "priceRange": "মূল্য পরিসীমা",
+            "availability": "উপলভ্যতা",
+            "rating": "রেটিং"
+        }
+    },
+    "productDetail": {
+        "weight": "ওজন",
+        "serves": "পরিবেশন",
+        "ingredients": "উপাদান",
+        "reviews": "পর্যালোচনা",
+        "customerReviews": "গ্রাহক পর্যালোচনা",
+        "writeReview": "পর্যালোচনা লিখুন",
+        "relatedProducts": "আপনার পছন্দ হতে পারে",
+        "addedToCart": "{{name}} কার্টে যোগ করা হয়েছে!",
+        "features": {
+            "freeDelivery": "বিনামূল্যে ডেলিভারি",
+            "fresh": "১০০% তাজা",
+            "easyReturns": "সহজ রিটার্ন"
+        }
+    },
+    "cart": {
+        "title": "শপিং কার্ট",
+        "empty": "আপনার কার্ট খালি",
+        "emptyMessage": "শুরু করতে কিছু সুস্বাদু আইটেম যোগ করুন!",
+        "item": "আইটেম",
+        "items": "আইটেম",
+        "removeItem": "আইটেম সরান",
+        "updateQuantity": "পরিমাণ আপডেট করুন",
+        "couponCode": "কুপন কোড",
+        "applyCoupon": "কুপন প্রয়োগ করুন",
+        "couponApplied": "কুপন সফলভাবে প্রয়োগ হয়েছে!",
+        "invalidCoupon": "অবৈধ কুপন কোড"
+    },
+    "checkout": {
+        "title": "চেকআউট",
+        "deliveryAddress": "ডেলিভারি ঠিকানা",
+        "paymentMethod": "পেমেন্ট পদ্ধতি",
+        "orderSummary": "অর্ডার সারাংশ",
+        "cashOnDelivery": "ক্যাশ অন ডেলিভারি",
+        "onlinePayment": "অনলাইন পেমেন্ট",
+        "cardPayment": "কার্ড পেমেন্ট",
+        "upiPayment": "UPI পেমেন্ট",
+        "form": {
+            "fullName": "পূর্ণ নাম",
+            "phone": "ফোন নম্বর",
+            "email": "ইমেল ঠিকানা",
+            "street": "রাস্তার ঠিকানা",
+            "city": "শহর",
+            "state": "রাজ্য",
+            "zipCode": "পিন কোড",
+            "landmark": "ল্যান্ডমার্ক (ঐচ্ছিক)",
+            "required": "এই ক্ষেত্রটি প্রয়োজনীয়",
+            "invalidEmail": "অবৈধ ইমেল ঠিকানা",
+            "invalidPhone": "অবৈধ ফোন নম্বর"
+        },
+        "orderPlaced": "অর্ডার সফলভাবে দেওয়া হয়েছে!",
+        "orderFailed": "অর্ডার দিতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    },
+    "trackOrder": {
+        "title": "আপনার অর্ডার ট্র্যাক করুন",
+        "subtitle": "ডেলিভারি স্ট্যাটাস দেখতে আপনার অর্ডার নম্বর লিখুন",
+        "orderNumber": "অর্ডার নম্বর",
+        "placeholder": "অর্ডার নম্বর লিখুন (যেমন TC2412ABC123)",
+        "notFound": "অর্ডার পাওয়া যায়নি। অনুগ্রহ করে আপনার অর্ডার নম্বর পরীক্ষা করুন।",
+        "status": {
+            "pending": "অর্ডার দেওয়া হয়েছে",
+            "confirmed": "অর্ডার কনফার্ম",
+            "preparing": "আপনার অর্ডার তৈরি হচ্ছে",
+            "ready": "পিকআপের জন্য প্রস্তুত",
+            "outForDelivery": "ডেলিভারির জন্য বেরিয়েছে",
+            "delivered": "ডেলিভার হয়েছে",
+            "cancelled": "অর্ডার বাতিল"
+        },
+        "timeline": {
+            "orderPlaced": "অর্ডার দেওয়া হয়েছে",
+            "confirmed": "অর্ডার কনফার্ম",
+            "preparing": "আপনার অর্ডার তৈরি হচ্ছে",
+            "ready": "পিকআপের জন্য প্রস্তুত",
+            "shipping": "ডেলিভারির জন্য বেরিয়েছে",
+            "delivered": "ডেলিভার হয়েছে"
+        },
+        "help": "আপনার অর্ডারে সমস্যা হচ্ছে?",
+        "contactSupport": "সাপোর্টের সাথে যোগাযোগ করুন"
+    },
+    "footer": {
+        "company": {
+            "title": "কোম্পানি",
+            "about": "আমাদের সম্পর্কে",
+            "contact": "যোগাযোগ",
+            "careers": "ক্যারিয়ার",
+            "blog": "ব্লগ"
+        },
+        "help": {
+            "title": "সাহায্য",
+            "faq": "সাধারণ প্রশ্ন",
+            "shipping": "শিপিং",
+            "returns": "রিটার্ন",
+            "trackOrder": "অর্ডার ট্র্যাক করুন"
+        },
+        "legal": {
+            "title": "আইনি",
+            "privacy": "গোপনীয়তা নীতি",
+            "terms": "সেবার শর্তাবলী",
+            "cookies": "কুকি নীতি"
+        },
+        "copyright": "© {{year}} TopCup. সর্বস্বত্ব সংরক্ষিত।",
+        "madeWith": "ভারতে ❤️ দিয়ে তৈরি"
+    },
+    "messages": {
+        "success": {
+            "addedToCart": "কার্টে যোগ করা হয়েছে!",
+            "orderPlaced": "অর্ডার সফলভাবে দেওয়া হয়েছে!",
+            "profileUpdated": "প্রোফাইল আপডেট হয়েছে!",
+            "passwordChanged": "পাসওয়ার্ড পরিবর্তন হয়েছে!"
+        },
+        "error": {
+            "somethingWrong": "কিছু ভুল হয়েছে",
+            "tryAgain": "অনুগ্রহ করে আবার চেষ্টা করুন",
+            "networkError": "নেটওয়ার্ক ত্রুটি। আপনার সংযোগ পরীক্ষা করুন।"
+        }
+    }
+}

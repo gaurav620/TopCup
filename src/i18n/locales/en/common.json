@@ -48,7 +48,11 @@
         "free": "Free",
         "bestseller": "Bestseller",
         "new": "New",
-        "outOfStock": "Out of Stock"
+        "outOfStock": "Out of Stock",
+        "gifts": "Gifts",
+        "snacks": "Snacks",
+        "combos": "Combos",
+        "rating": "Rating"
     },
     "home": {
         "hero": {
