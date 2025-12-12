@@ -13,8 +13,9 @@ import Badge from '@/components/ui/Badge';
 import toast from 'react-hot-toast';
 import ProductCard, { Product } from '@/components/product/ProductCard';
 
-// Sample products database 
+// Complete products database matching all products from /products page
 const PRODUCTS_DB: Record<string, any> = {
+    // CAKES
     'chocolate-truffle-cake': {
         _id: '1',
         name: 'Chocolate Truffle Cake',
@@ -60,7 +61,6 @@ const PRODUCTS_DB: Record<string, any> = {
         ingredients: ['Fresh Strawberries', 'Vanilla', 'Whipped Cream', 'Flour', 'Sugar'],
         averageRating: 4.6,
         totalReviews: 76,
-        isBestseller: false,
         deliveryInfo: 'Same day delivery available',
         reviews: [
             { user: 'Meera K.', rating: 5, comment: 'Love the fresh strawberries! So delicious.', date: '3 days ago' },
@@ -70,7 +70,7 @@ const PRODUCTS_DB: Record<string, any> = {
         _id: '13',
         name: 'Butterscotch Crunch Cake',
         slug: 'butterscotch-crunch-cake',
-        description: 'Classic butterscotch cake with crunchy caramel bits and smooth butterscotch frosting.',
+        description: 'Classic butterscotch cake with crunchy caramel bits and smooth butterscotch frosting. A nostalgic favorite that brings back sweet memories.',
         shortDescription: 'Butterscotch with crunchy caramel',
         price: 700,
         discountPrice: 350,
@@ -88,8 +88,8 @@ const PRODUCTS_DB: Record<string, any> = {
         _id: '2',
         name: 'Red Velvet Delight',
         slug: 'red-velvet-delight',
-        description: 'Classic red velvet cake with smooth cream cheese frosting.',
-        shortDescription: 'Red velvet with cream cheese',
+        description: 'Experience the classic elegance of our Red Velvet Cake with its distinctive red color, velvety texture, and smooth cream cheese frosting. A timeless favorite that never goes out of style.',
+        shortDescription: 'Classic red velvet with cream cheese',
         price: 900,
         discountPrice: 450,
         category: 'cakes',
@@ -101,7 +101,9 @@ const PRODUCTS_DB: Record<string, any> = {
         totalReviews: 98,
         isBestseller: true,
         deliveryInfo: 'Same day delivery available',
-        reviews: [],
+        reviews: [
+            { user: 'Sneha M.', rating: 5, comment: 'Perfect red velvet! The frosting is amazing.', date: '1 day ago' },
+        ],
     },
     'black-forest-cake': {
         _id: '5',
@@ -112,7 +114,6 @@ const PRODUCTS_DB: Record<string, any> = {
         price: 800,
         discountPrice: 400,
         category: 'cakes',
-        subcategory: 'Chocolate Cakes',
         images: [
             'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=800',
             'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800',
@@ -122,12 +123,342 @@ const PRODUCTS_DB: Record<string, any> = {
         ingredients: ['Chocolate Sponge', 'Whipped Cream', 'Cherries', 'Dark Chocolate'],
         averageRating: 4.5,
         totalReviews: 89,
-        isBestseller: false,
         deliveryInfo: 'Same day delivery available',
         reviews: [
             { user: 'Amit K.', rating: 5, comment: 'Love the cherry flavor! Perfect balance.', date: '2 days ago' },
-            { user: 'Sonia R.', rating: 4, comment: 'Good taste, fresh cherries used.', date: '5 days ago' },
         ],
+    },
+    'coffee-mocha-cake': {
+        _id: '15',
+        name: 'Coffee Mocha Cake',
+        slug: 'coffee-mocha-cake',
+        description: 'Rich coffee-flavored cake with mocha frosting for coffee lovers. Perfect blend of coffee and chocolate.',
+        shortDescription: 'Coffee cake with mocha frosting',
+        price: 900,
+        discountPrice: 450,
+        category: 'cakes',
+        images: ['https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=800'],
+        weight: '500g',
+        servings: '8-10 people',
+        ingredients: ['Coffee', 'Cocoa', 'Cream', 'Sugar'],
+        averageRating: 4.8,
+        totalReviews: 123,
+        isBestseller: true,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [],
+    },
+    'pineapple-fresh-cake': {
+        _id: '12',
+        name: 'Pineapple Fresh Cake',
+        slug: 'pineapple-fresh-cake',
+        description: 'Light and refreshing pineapple cake with fresh pineapple chunks and whipped cream.',
+        shortDescription: 'Fresh pineapple with cream',
+        price: 700,
+        discountPrice: 350,
+        category: 'cakes',
+        images: ['https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800'],
+        weight: '500g',
+        servings: '8-10 people',
+        ingredients: ['Fresh Pineapple', 'Whipped Cream', 'Vanilla'],
+        averageRating: 4.5,
+        totalReviews: 67,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [],
+    },
+    'mango-delight-cake': {
+        _id: '14',
+        name: 'Mango Delight Cake',
+        slug: 'mango-delight-cake',
+        description: 'Tropical mango-flavored cake perfect for mango lovers. Made with real mango pulp.',
+        shortDescription: 'Real mango pulp cake',
+        price: 800,
+        discountPrice: 400,
+        category: 'cakes',
+        images: ['https://images.unsplash.com/photo-1519869325930-281384150729?w=800'],
+        weight: '500g',
+        servings: '8-10 people',
+        ingredients: ['Mango Pulp', 'Cream', 'Vanilla'],
+        averageRating: 4.7,
+        totalReviews: 54,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [],
+    },
+
+    // GIFTS
+    'premium-gift-hamper': {
+        _id: '3',
+        name: 'Premium Gift Hamper',
+        slug: 'premium-gift-hamper',
+        description: 'Luxurious gift hamper with assorted chocolates, cookies, and treats. Perfect for special occasions.',
+        shortDescription: 'Luxury assorted gift basket',
+        price: 3000,
+        discountPrice: 1500,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800'],
+        servings: 'Multiple items',
+        averageRating: 4.9,
+        totalReviews: 67,
+        isFeatured: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'luxury-chocolate-gift-set': {
+        _id: '8',
+        name: 'Luxury Chocolate Gift Set',
+        slug: 'luxury-chocolate-gift-set',
+        description: 'Premium chocolates beautifully packaged. Perfect gift for chocolate lovers.',
+        shortDescription: 'Premium chocolate collection',
+        price: 2000,
+        discountPrice: 1000,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=800'],
+        averageRating: 4.8,
+        totalReviews: 112,
+        isBestseller: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'anniversary-gift-basket': {
+        _id: '10',
+        name: 'Anniversary Gift Basket',
+        slug: 'anniversary-gift-basket',
+        description: 'Special anniversary gift basket with roses, chocolates, and cake.',
+        shortDescription: 'Anniversary special hamper',
+        price: 5000,
+        discountPrice: 2500,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1549490349-8643362247b5?w=800'],
+        averageRating: 4.9,
+        totalReviews: 54,
+        isFeatured: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'birthday-surprise-box': {
+        _id: '16',
+        name: 'Birthday Surprise Box',
+        slug: 'birthday-surprise-box',
+        description: 'Birthday special surprise box with cake, balloons, and treats.',
+        shortDescription: 'Birthday celebration box',
+        price: 2600,
+        discountPrice: 1300,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
+        averageRating: 4.7,
+        totalReviews: 89,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'thank-you-gift-pack': {
+        _id: '17',
+        name: 'Thank You Gift Pack',
+        slug: 'thank-you-gift-pack',
+        description: 'Thoughtful thank you gift with cookies and chocolates.',
+        shortDescription: 'Gratitude gift pack',
+        price: 1600,
+        discountPrice: 800,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800'],
+        averageRating: 4.6,
+        totalReviews: 45,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'diwali-special-hamper': {
+        _id: '18',
+        name: 'Diwali Special Hamper',
+        slug: 'diwali-special-hamper',
+        description: 'Festive Diwali hamper with sweets, dry fruits, and treats.',
+        shortDescription: 'Festival special hamper',
+        price: 4000,
+        discountPrice: 2000,
+        category: 'gifts',
+        images: ['https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800'],
+        averageRating: 4.9,
+        totalReviews: 156,
+        isBestseller: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+
+    // SNACKS
+    'assorted-cookies-box': {
+        _id: '4',
+        name: 'Assorted Cookies Box',
+        slug: 'assorted-cookies-box',
+        description: 'Variety of handcrafted cookies in different flavors.',
+        shortDescription: 'Mixed cookies variety pack',
+        price: 800,
+        discountPrice: 400,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800'],
+        weight: '500g',
+        averageRating: 4.6,
+        totalReviews: 234,
+        isBestseller: true,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'gourmet-brownie-box': {
+        _id: '7',
+        name: 'Gourmet Brownie Box',
+        slug: 'gourmet-brownie-box',
+        description: 'Fudgy chocolate brownies, freshly baked.',
+        shortDescription: 'Premium chocolate brownies',
+        price: 900,
+        discountPrice: 450,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=800'],
+        weight: '400g',
+        averageRating: 4.7,
+        totalReviews: 178,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'dry-fruits-premium-box': {
+        _id: '11',
+        name: 'Dry Fruits Premium Box',
+        slug: 'dry-fruits-premium-box',
+        description: 'Premium selection of dry fruits and nuts.',
+        shortDescription: 'Mixed dry fruits',
+        price: 1800,
+        discountPrice: 900,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=800'],
+        weight: '500g',
+        averageRating: 4.7,
+        totalReviews: 132,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'chocolate-chip-cookies': {
+        _id: '19',
+        name: 'Chocolate Chip Cookies',
+        slug: 'chocolate-chip-cookies',
+        description: 'Classic chocolate chip cookies, soft and chewy.',
+        shortDescription: 'Soft chocolate chip cookies',
+        price: 600,
+        discountPrice: 300,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800'],
+        weight: '300g',
+        averageRating: 4.5,
+        totalReviews: 198,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'almond-biscotti-pack': {
+        _id: '20',
+        name: 'Almond Biscotti Pack',
+        slug: 'almond-biscotti-pack',
+        description: 'Crunchy Italian biscotti with almonds.',
+        shortDescription: 'Italian almond biscotti',
+        price: 700,
+        discountPrice: 350,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=800'],
+        weight: '250g',
+        averageRating: 4.6,
+        totalReviews: 87,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'mixed-nuts-jar': {
+        _id: '21',
+        name: 'Mixed Nuts Jar',
+        slug: 'mixed-nuts-jar',
+        description: 'Roasted and salted mixed nuts in a jar.',
+        shortDescription: 'Roasted mixed nuts',
+        price: 1200,
+        discountPrice: 600,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=800'],
+        weight: '500g',
+        averageRating: 4.8,
+        totalReviews: 165,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'chocolate-truffle-box': {
+        _id: '22',
+        name: 'Chocolate Truffle Box',
+        slug: 'chocolate-truffle-box',
+        description: 'Assorted chocolate truffles, handcrafted.',
+        shortDescription: 'Handcrafted truffles',
+        price: 900,
+        discountPrice: 450,
+        category: 'snacks',
+        images: ['https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800'],
+        weight: '250g',
+        averageRating: 4.7,
+        totalReviews: 213,
+        isBestseller: true,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+
+    // COMBOS
+    'birthday-celebration-box': {
+        _id: '6',
+        name: 'Birthday Celebration Box',
+        slug: 'birthday-celebration-box',
+        description: 'Complete birthday celebration package with cake, balloons, and treats.',
+        shortDescription: 'Birthday combo package',
+        price: 4000,
+        discountPrice: 2000,
+        category: 'combos',
+        images: ['https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800'],
+        averageRating: 4.9,
+        totalReviews: 45,
+        isFeatured: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'party-pack-combo': {
+        _id: '23',
+        name: 'Party Pack Combo',
+        slug: 'party-pack-combo',
+        description: 'Party essentials combo with snacks, cake, and decorations.',
+        shortDescription: 'Complete party pack',
+        price: 6000,
+        discountPrice: 3000,
+        category: 'combos',
+        images: ['https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800'],
+        averageRating: 4.8,
+        totalReviews: 67,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'family-treat-combo': {
+        _id: '24',
+        name: 'Family Treat Combo',
+        slug: 'family-treat-combo',
+        description: 'Family combo with cake, cookies, and snacks.',
+        shortDescription: 'Family sharing combo',
+        price: 3400,
+        discountPrice: 1700,
+        category: 'combos',
+        images: ['https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=800'],
+        averageRating: 4.7,
+        totalReviews: 89,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
+    },
+    'romantic-date-night': {
+        _id: '25',
+        name: 'Romantic Date Night',
+        slug: 'romantic-date-night',
+        description: 'Romantic combo with cake, chocolates, and candles.',
+        shortDescription: 'Date night special',
+        price: 3800,
+        discountPrice: 1900,
+        category: 'combos',
+        images: ['https://images.unsplash.com/photo-1587668178277-295251f900ce?w=800'],
+        averageRating: 4.9,
+        totalReviews: 112,
+        isBestseller: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [],
     },
 };
 
@@ -178,12 +509,13 @@ export default function ProductDetailPage() {
             if (foundProduct) {
                 setProduct(foundProduct);
             } else {
-                // Fallback to first product
-                setProduct(PRODUCTS_DB['chocolate-truffle-cake']);
+                // Product not found - show error or redirect
+                toast.error('Product not found');
+                router.push('/products');
             }
             setLoading(false);
         }
-    }, [slug]);
+    }, [slug, router]);
 
     if (loading || !product) {
         return (
@@ -245,7 +577,7 @@ export default function ProductDetailPage() {
                                 <Badge className="absolute top-6 left-6 z-10">{t('common.bestseller')}</Badge>
                             )}
                             {discount > 0 && (
-                                <Badge variant="secondary" className="absolute top-6 right-6 z-10 text-red-600">
+                                <Badge variant="primary" className="absolute top-6 right-6 z-10 bg-red-600 text-white">
                                     -{discount}% OFF
                                 </Badge>
                             )}
@@ -265,8 +597,8 @@ export default function ProductDetailPage() {
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
                                         className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${selectedImage === idx
-                                            ? 'border-primary-500 scale-105'
-                                            : 'border-transparent hover:border-gray-300'
+                                                ? 'border-primary-500 scale-105'
+                                                : 'border-transparent hover:border-gray-300'
                                             }`}
                                     >
                                         <Image src={img} alt="" width={150} height={150} className="w-full h-full object-cover" />
@@ -289,8 +621,8 @@ export default function ProductDetailPage() {
                                         <Star
                                             key={i}
                                             className={`w-5 h-5 ${i < Math.floor(product.averageRating)
-                                                ? 'fill-yellow-400 text-yellow-400'
-                                                : 'text-gray-300'
+                                                    ? 'fill-yellow-400 text-yellow-400'
+                                                    : 'text-gray-300'
                                                 }`}
                                         />
                                     ))}
@@ -314,16 +646,18 @@ export default function ProductDetailPage() {
 
                         <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
 
-                        <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
-                            <div>
-                                <p className="text-sm text-gray-500 mb-1">{t('productDetail.weight')}</p>
-                                <p className="font-semibold text-gray-900">{product.weight}</p>
+                        {product.weight && product.servings && (
+                            <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
+                                <div>
+                                    <p className="text-sm text-gray-500 mb-1">{t('productDetail.weight')}</p>
+                                    <p className="font-semibold text-gray-900">{product.weight}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500 mb-1">{t('productDetail.serves')}</p>
+                                    <p className="font-semibold text-gray-900">{product.servings}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-sm text-gray-500 mb-1">{t('productDetail.serves')}</p>
-                                <p className="font-semibold text-gray-900">{product.servings}</p>
-                            </div>
-                        </div>
+                        )}
 
                         {/* Quantity */}
                         <div className="mb-6">
