@@ -9,98 +9,103 @@ import ChristmasCountdown from './ChristmasCountdown';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ChristmasHero() {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <div className="christmas-hero">
-            <div className="hero-overlay" />
+  return (
+    <div className="christmas-hero">
+      <div className="hero-overlay" />
 
-            <div className="container-custom relative z-10">
-                <motion.div
-                    className="hero-content"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    {/* Christmas Badge */}
-                    <motion.div
-                        className="christmas-badge"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3, type: 'spring' }}
-                    >
-                        <Sparkles className="w-4 h-4" />
-                        🎄 Christmas Special 2024 🎄
-                        <Sparkles className="w-4 h-4" />
-                    </motion.div>
+      <div className="container-custom relative z-10">
+        <motion.div
+          className="hero-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Christmas Badge */}
+          <motion.div
+            className="christmas-badge"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3, type: 'spring' }}
+          >
+            <Sparkles className="w-4 h-4" />
+            🎄 Christmas Special 2024 🎄
+            <Sparkles className="w-4 h-4" />
+          </motion.div>
 
-                    {/* Main Heading */}
-                    <motion.h1
-                        className="hero-title"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        Sweet Treats for Your
-                        <span className="christmas-gradient"> Christmas </span>
-                        Celebrations
-                    </motion.h1>
+          {/* Main Heading */}
+          <motion.h1
+            className="hero-title"
+            {/* Main Heading - Clean & Modern */}
+                    <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <span className="bg-gradient-to-r from-red-600 via-red-500 to-green-600 bg-clip-text text-transparent">
+              Sweet Treats for Your
+            </span>
+            <br />
+            <span className="text-gray-900">
+              Christmas Celebrations
+            </span>
+          </h1>
 
-                    {/* Subheading */}
-                    <motion.p
-                        className="hero-subtitle"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                    >
-                        ✨ Up to 50% OFF on all festive cakes & gifts ✨
-                        <br />
-                        Free Delivery on orders above ₹999
-                    </motion.p>
+          {/* Subtitle - Elegant */}
+          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-light">
+            Indulge in festive flavors with up to 50% off on premium cakes & gifts
+          </p>
 
-                    {/* Countdown */}
-                    <motion.div
-                        className="countdown-container"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.8 }}
-                    >
-                        <p className="countdown-label">🎅 Christmas Countdown 🎅</p>
-                        <ChristmasCountdown />
-                    </motion.div>
-
-                    {/* CTAs */}
-                    <motion.div
-                        className="hero-ctas"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                    >
-                        <Link href="/products">
-                            <Button size="lg" className="cta-primary">
-                                <Gift className="w-5 h-5 mr-2" />
-                                Shop Christmas Specials
-                            </Button>
-                        </Link>
-                        <Link href="/products?category=gifts">
-                            <Button size="lg" variant="outline" className="cta-secondary">
-                                View Gift Hampers
-                            </Button>
-                        </Link>
-                    </motion.div>
-
-                    {/* Floating Icons */}
-                    <div className="floating-icons">
-                        <div className="icon1">🎁</div>
-                        <div className="icon2">🎄</div>
-                        <div className="icon3">⛄</div>
-                        <div className="icon4">🔔</div>
-                        <div className="icon5">✨</div>
-                    </div>
-                </motion.div>
+          {/* Features */}
+          <div className="flex flex-wrap justify-center gap-4 mb-10">
+            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm">
+              <span className="text-xl">✨</span>
+              <span className="text-sm font-medium text-gray-700">Up to 50% OFF</span>
             </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm">
+              <span className="text-xl">🚚</span>
+              <span className="text-sm font-medium text-gray-700">Free Delivery ₹999+</span>
+            </div>
+          </div>
 
-            <style jsx>{`
+          {/* Countdown */}
+          <motion.div
+            className="countdown-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <p className="countdown-label">🎅 Christmas Countdown 🎅</p>
+            <ChristmasCountdown />
+          </motion.div>
+
+          {/* CTAs - Modern & Clean */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/products">
+              <button className="group px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-2">
+                <span className="text-xl">🎁</span>
+                Shop Christmas Specials
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+            </Link>
+            <Link href="/products?category=gifts">
+              <button className="px-8 py-4 bg-white text-gray-900 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-200">
+                View Gift Hampers
+              </button>
+            </Link>
+          </div>
+
+          {/* Floating Icons */}
+          <div className="floating-icons">
+            <div className="icon1">🎁</div>
+            <div className="icon2">🎄</div>
+            <div className="icon3">⛄</div>
+            <div className="icon4">🔔</div>
+            <div className="icon5">✨</div>
+          </div>
+        </motion.div>
+      </div>
+
+      <style jsx>{`
         .christmas-hero {
           position: relative;
           background: linear-gradient(135deg, #C41E3A 0%, #165B33 50%, #C41E3A 100%);
@@ -294,6 +299,6 @@ export default function ChristmasHero() {
           }
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }
