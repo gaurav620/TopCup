@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
 
+// Mark as dynamic route
+export const dynamic = 'force-dynamic';
+
 // GET all products with filters
 export async function GET(request: NextRequest) {
     try {

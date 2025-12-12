@@ -5,6 +5,9 @@ import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 
+// Mark as dynamic route
+export const dynamic = 'force-dynamic';
+
 // GET - List all users (Admin only)
 export async function GET(req: NextRequest) {
     try {

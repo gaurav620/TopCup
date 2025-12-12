@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+// Mark as dynamic route to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 // Check if we're in demo mode (no database)
 const DEMO_MODE = !process.env.MONGODB_URI || process.env.MONGODB_URI.includes('localhost');
 
