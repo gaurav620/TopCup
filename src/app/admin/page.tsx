@@ -74,7 +74,7 @@ export default function AdminDashboard() {
                                 <Settings className="w-8 h-8 text-primary-600" />
                                 Admin Dashboard
                             </h1>
-                            <p className="text-gray-600 mt-1">Welcome back, {session.user.name}! Here's your overview.</p>
+                            <p className="text-gray-600 mt-1">Welcome back, {session.user.name}! Here&apos;s your overview.</p>
                             <p className="text-xs text-gray-500 mt-2">Don&apos;t have an account? <Link href="/signup" className="text-indigo-600 hover:underline">Sign up</Link></p>
                         </div>
                         <Link href="/admin/products/new">
