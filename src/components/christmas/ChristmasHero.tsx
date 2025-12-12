@@ -30,15 +30,17 @@ export default function ChristmasHero() {
             transition={{ delay: 0.3, type: 'spring' }}
           >
             <Sparkles className="w-4 h-4" />
-            🎄 Christmas Special 2024 🎄
+            🎄 Christmas Special 2025 🎄
             <Sparkles className="w-4 h-4" />
           </motion.div>
 
           {/* Main Heading */}
           <motion.h1
-            className="hero-title"
-            {/* Main Heading - Clean & Modern */}
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
             <span className="bg-gradient-to-r from-red-600 via-red-500 to-green-600 bg-clip-text text-transparent">
               Sweet Treats for Your
             </span>
@@ -46,12 +48,17 @@ export default function ChristmasHero() {
             <span className="text-gray-900">
               Christmas Celebrations
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Subtitle - Elegant */}
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-light">
-            Indulge in festive flavors with up to 50% off on premium cakes & gifts
-          </p>
+          <motion.p
+            className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Indulge in festive flavors with up to 50% off on premium cakes &amp; gifts
+          </motion.p>
 
           {/* Features */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
