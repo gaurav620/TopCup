@@ -1,6 +1,6 @@
+```typescript
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
-import Order from '@/models/Order';
 
 // Mark as dynamic route
 export const dynamic = 'force-dynamic';
@@ -20,33 +20,30 @@ export async function GET(req: NextRequest) {
 
         await dbConnect();
 
-        // Find order by orderNumber or orderId (fallback)
-        const order = await Order.findOne({
-            $or: [
-                { orderNumber: orderNumber },
-                { orderId: orderNumber }
-            ]
-        }).lean();
+        // Dynamically import Order model to avoid issues
+        const Order = (await import('@/models/Order')).default;
+
+        // Find order by orderId (this is the field name in Order.js)
+        const order = await Order.findOne({ orderId: orderNumber }).lean();
 
         if (!order) {
             return NextResponse.json(
-                { error: 'Order not found' },
+                { error: 'Order not found. Please check your order number.' },
                 { status: 404 }
             );
         }
 
         // Map order status to tracking steps
-        const statusSteps = {
+        const statusSteps: Record<string, number> = {
             pending: 1,
             confirmed: 2,
             processing: 3,
             shipped: 4,
-            out_for_delivery: 4,  // Support both shipped and out_for_delivery
             delivered: 5,
             cancelled: 0
         };
 
-        const currentStep = statusSteps[(order as any).orderStatus as keyof typeof statusSteps] || 1;
+        const currentStep = statusSteps[order.status] || 1;
         const createdDate = new Date(order.createdAt);
         const formatTime = (date: Date) => date.toLocaleString('en-US', {
             month: 'short',
@@ -87,11 +84,11 @@ export async function GET(req: NextRequest) {
         ];
 
         // Handle cancelled orders with detailed timeline
-        if ((order as any).orderStatus === 'cancelled') {
+        if (order.status === 'cancelled') {
             return NextResponse.json({
                 success: true,
                 order: {
-                    number: order.orderNumber || order.orderId,
+                    number: order.orderId,
                     status: 'Order Cancelled',
                     cancelled: true,
                     steps: [
@@ -117,15 +114,14 @@ export async function GET(req: NextRequest) {
             confirmed: 'Order Confirmed',
             processing: 'Preparing Your Order',
             shipped: 'Out for Delivery',
-            out_for_delivery: 'Out for Delivery',
             delivered: 'Delivered'
         };
 
         return NextResponse.json({
             success: true,
             order: {
-                number: (order as any).orderNumber || (order as any).orderId,
-                status: statusDisplay[(order as any).orderStatus] || 'Processing',
+                number: order.orderId,
+                status: statusDisplay[order.status] || 'Processing',
                 cancelled: false,
                 steps
             }
@@ -133,8 +129,9 @@ export async function GET(req: NextRequest) {
     } catch (error: any) {
         console.error('Error tracking order:', error);
         return NextResponse.json(
-            { error: 'Failed to track order' },
+            { error: 'Failed to track order. Please try again.' },
             { status: 500 }
         );
     }
 }
+```
