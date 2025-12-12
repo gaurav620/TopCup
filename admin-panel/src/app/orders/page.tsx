@@ -176,10 +176,10 @@ export default function OrdersPage() {
                             className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500 transition-all"
                         >
                             <option value="all">All Orders</option>
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="processing">Processing</option>
-                            <option value="shipped">Shipped</option>
+                            <option value="pending">Order Placed</option>
+                            <option value="confirmed">Order Confirmed</option>
+                            <option value="processing">Preparing</option>
+                            <option value="shipped">Out for Delivery</option>
                             <option value="delivered">Delivered</option>
                             <option value="cancelled">Cancelled</option>
                         </select>
@@ -198,7 +198,7 @@ export default function OrdersPage() {
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-yellow-100">
                         <div className="flex items-center gap-2 mb-2">
                             <Clock className="w-5 h-5 text-yellow-600" />
-                            <p className="text-xs text-gray-600 font-medium">Pending</p>
+                            <p className="text-xs text-gray-600 font-medium">Order Placed</p>
                         </div>
                         <p className="text-2xl font-bold text-yellow-700">
                             {orders.filter(o => o.status === 'pending').length}
@@ -216,7 +216,7 @@ export default function OrdersPage() {
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-purple-100">
                         <div className="flex items-center gap-2 mb-2">
                             <Package className="w-5 h-5 text-purple-600" />
-                            <p className="text-xs text-gray-600 font-medium">Processing</p>
+                            <p className="text-xs text-gray-600 font-medium">Preparing</p>
                         </div>
                         <p className="text-2xl font-bold text-purple-700">
                             {orders.filter(o => o.status === 'processing').length}
@@ -225,7 +225,7 @@ export default function OrdersPage() {
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-indigo-100">
                         <div className="flex items-center gap-2 mb-2">
                             <Package className="w-5 h-5 text-indigo-600" />
-                            <p className="text-xs text-gray-600 font-medium">Shipped</p>
+                            <p className="text-xs text-gray-600 font-medium">Out for Delivery</p>
                         </div>
                         <p className="text-2xl font-bold text-indigo-700">
                             {orders.filter(o => o.status === 'shipped').length}
@@ -311,10 +311,10 @@ export default function OrdersPage() {
                                                 onChange={(e) => handleStatusChange(order.id, e.target.value)}
                                                 className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer ${getStatusColor(order.status)}`}
                                             >
-                                                <option value="pending">Pending</option>
-                                                <option value="confirmed">Confirmed</option>
-                                                <option value="processing">Processing</option>
-                                                <option value="shipped">Shipped</option>
+                                                <option value="pending">Order Placed</option>
+                                                <option value="confirmed">Order Confirmed</option>
+                                                <option value="processing">Preparing</option>
+                                                <option value="shipped">Out for Delivery</option>
                                                 <option value="delivered">Delivered</option>
                                                 <option value="cancelled">Cancelled</option>
                                             </select>
