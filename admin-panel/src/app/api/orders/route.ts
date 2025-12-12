@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
             query.orderNumber = { $regex: search, $options: 'i' };
         }
 
+        // Note: Order model uses 'customer' field with embedded data, not 'user' reference
         const orders = await Order.find(query)
             .sort({ createdAt: -1 })
             .lean();
@@ -30,9 +31,10 @@ export async function GET(req: NextRequest) {
             orders: orders.map(order => ({
                 ...order,
                 _id: order._id.toString(),
+                // Map customer to user format for frontend compatibility
+                user: order.customer || { name: 'Guest', email: 'N/A' },
                 orderNumber: (order as any).orderNumber || (order as any).orderId,
-                totalPrice: (order as any).totalAmount || (order as any).totalPrice,
-                customer: order.customer || { name: 'Unknown', email: 'N/A' },
+                totalPrice: (order as any).totalAmount || (order as any).totalPrice
             })),
             count: orders.length
         });

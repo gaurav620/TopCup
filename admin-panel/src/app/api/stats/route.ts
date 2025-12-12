@@ -9,10 +9,10 @@ export async function GET(req: NextRequest) {
     try {
         await dbConnect();
 
-        // Get total revenue
+        // Get total revenue (Order.js model uses 'totalAmount', not 'totalPrice')
         const revenueResult = await Order.aggregate([
             { $match: { status: { $in: ['confirmed', 'processing', 'shipped', 'delivered'] } } },
-            { $group: { _id: null, total: { $sum: '$totalPrice' } } }
+            { $group: { _id: null, total: { $sum: '$totalAmount' } } }
         ]);
         const totalRevenue = revenueResult[0]?.total || 0;
 
@@ -30,11 +30,11 @@ export async function GET(req: NextRequest) {
             { $group: { _id: '$status', count: { $sum: 1 } } }
         ]);
 
-        // Get recent orders
+        // Get recent orders (without population since Order.js uses embedded customer data)
         const recentOrders = await Order.find()
-            .populate('user', 'name email')
             .sort({ createdAt: -1 })
-            .limit(10);
+            .limit(10)
+            .lean();
 
         return NextResponse.json({
             success: true,

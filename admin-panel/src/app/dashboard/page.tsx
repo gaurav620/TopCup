@@ -10,6 +10,13 @@ export default function Dashboard() {
     const router = useRouter();
     const [isAuth, setIsAuth] = useState(false);
     const [adminName, setAdminName] = useState('Admin');
+    const [dashboardStats, setDashboardStats] = useState({
+        totalRevenue: 0,
+        totalOrders: 0,
+        totalProducts: 0,
+        totalUsers: 0
+    });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const auth = localStorage.getItem('adminAuth');
@@ -19,8 +26,30 @@ export default function Dashboard() {
         } else {
             setIsAuth(true);
             setAdminName(name || 'Admin');
+            fetchDashboardStats();
         }
     }, [router]);
+
+    const fetchDashboardStats = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch('/api/stats');
+            const data = await response.json();
+
+            if (data.success) {
+                setDashboardStats({
+                    totalRevenue: data.stats.totalRevenue || 0,
+                    totalOrders: data.stats.totalOrders || 0,
+                    totalProducts: data.stats.totalProducts || 0,
+                    totalUsers: data.stats.totalUsers || 0
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching dashboard stats:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('adminAuth');
@@ -36,10 +65,24 @@ export default function Dashboard() {
         );
     }
 
+    // Format currency
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 0
+        }).format(amount);
+    };
+
+    // Format number with commas
+    const formatNumber = (num: number) => {
+        return new Intl.NumberFormat('en-IN').format(num);
+    };
+
     const stats = [
         {
             title: 'Total Revenue',
-            value: '₹1,24,560',
+            value: formatCurrency(dashboardStats.totalRevenue),
             change: '+12.5%',
             icon: DollarSign,
             color: 'from-green-500 to-emerald-600',
@@ -48,7 +91,7 @@ export default function Dashboard() {
         },
         {
             title: 'Total Orders',
-            value: '234',
+            value: formatNumber(dashboardStats.totalOrders),
             change: '+8.2%',
             icon: ShoppingBag,
             color: 'from-blue-500 to-blue-600',
@@ -57,7 +100,7 @@ export default function Dashboard() {
         },
         {
             title: 'Total Products',
-            value: '48',
+            value: formatNumber(dashboardStats.totalProducts),
             change: '+2',
             icon: Package,
             color: 'from-purple-500 to-purple-600',
@@ -66,7 +109,7 @@ export default function Dashboard() {
         },
         {
             title: 'Total Users',
-            value: '1,234',
+            value: formatNumber(dashboardStats.totalUsers),
             change: '+15.3%',
             icon: Users,
             color: 'from-orange-500 to-orange-600',
@@ -82,7 +125,7 @@ export default function Dashboard() {
             icon: Users,
             href: '/users',
             color: 'from-purple-500 to-purple-600',
-            count: '1,234 users'
+            count: `${formatNumber(dashboardStats.totalUsers)} users`
         },
         {
             title: 'Product Catalog',
@@ -90,7 +133,7 @@ export default function Dashboard() {
             icon: Package,
             href: '/products',
             color: 'from-blue-500 to-blue-600',
-            count: '48 products'
+            count: `${formatNumber(dashboardStats.totalProducts)} products`
         },
         {
             title: 'Order Management',
@@ -98,7 +141,7 @@ export default function Dashboard() {
             icon: ShoppingBag,
             href: '/orders',
             color: 'from-green-500 to-green-600',
-            count: '234 orders'
+            count: `${formatNumber(dashboardStats.totalOrders)} orders`
         },
         {
             title: 'Delivery Partners',
@@ -114,7 +157,7 @@ export default function Dashboard() {
             icon: BarChart,
             href: '/analytics',
             color: 'from-orange-500 to-orange-600',
-            count: '₹1.2L revenue'
+            count: `${formatCurrency(dashboardStats.totalRevenue)} revenue`
         },
     ];
 
@@ -229,26 +272,26 @@ export default function Dashboard() {
                         <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl">
                             <div className="flex items-center justify-center mb-2">
                                 <TrendingUp className="w-6 h-6 text-green-600 mr-2" />
-                                <p className="text-3xl font-bold text-gray-900">₹1,24,560</p>
+                                <p className="text-3xl font-bold text-gray-900">{formatCurrency(dashboardStats.totalRevenue)}</p>
                             </div>
                             <p className="text-sm text-gray-700 font-medium">Total Revenue</p>
-                            <p className="text-sm text-green-600 mt-1 font-semibold">+12.5% from last month</p>
+                            <p className="text-sm text-green-600 mt-1 font-semibold">Real-time data</p>
                         </div>
                         <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
                             <div className="flex items-center justify-center mb-2">
                                 <ShoppingBag className="w-6 h-6 text-blue-600 mr-2" />
-                                <p className="text-3xl font-bold text-gray-900">234</p>
+                                <p className="text-3xl font-bold text-gray-900">{formatNumber(dashboardStats.totalOrders)}</p>
                             </div>
                             <p className="text-sm text-gray-700 font-medium">Total Orders</p>
-                            <p className="text-sm text-blue-600 mt-1 font-semibold">+8.2% from last month</p>
+                            <p className="text-sm text-blue-600 mt-1 font-semibold">Live from database</p>
                         </div>
                         <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl">
                             <div className="flex items-center justify-center mb-2">
                                 <Users className="w-6 h-6 text-purple-600 mr-2" />
-                                <p className="text-3xl font-bold text-gray-900">1,234</p>
+                                <p className="text-3xl font-bold text-gray-900">{formatNumber(dashboardStats.totalUsers)}</p>
                             </div>
                             <p className="text-sm text-gray-700 font-medium">Total Users</p>
-                            <p className="text-sm text-purple-600 mt-1 font-semibold">+15.3% from last month</p>
+                            <p className="text-sm text-purple-600 mt-1 font-semibold">Updated now</p>
                         </div>
                     </div>
                 </motion.div>

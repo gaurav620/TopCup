@@ -107,6 +107,17 @@ export default function OrdersPage() {
         return matchesSearch && matchesStatus;
     });
 
+    // Smart revenue calculation - matches dashboard stats
+    const calculateRevenue = () => {
+        return orders.reduce((total, order) => {
+            // Count revenue from confirmed, processing, shipped, and delivered orders
+            if (['confirmed', 'processing', 'shipped', 'delivered'].includes(order.status)) {
+                return total + order.totalPrice;
+            }
+            return total;
+        }, 0);
+    };
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'pending': return 'bg-yellow-100 text-yellow-700';
@@ -176,40 +187,77 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Stats */}
-                <div className="grid md:grid-cols-4 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 mb-6">
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-green-100">
                         <div className="flex items-center gap-2 mb-2">
                             <ShoppingBag className="w-5 h-5 text-green-600" />
-                            <p className="text-sm text-gray-600 font-medium">Total Orders</p>
+                            <p className="text-xs text-gray-600 font-medium">Total</p>
                         </div>
                         <p className="text-2xl font-bold text-gray-900">{orders.length}</p>
                     </div>
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-yellow-100">
                         <div className="flex items-center gap-2 mb-2">
                             <Clock className="w-5 h-5 text-yellow-600" />
-                            <p className="text-sm text-gray-600 font-medium">Pending</p>
+                            <p className="text-xs text-gray-600 font-medium">Pending</p>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-yellow-700">
                             {orders.filter(o => o.status === 'pending').length}
                         </p>
                     </div>
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-blue-100">
                         <div className="flex items-center gap-2 mb-2">
                             <Package className="w-5 h-5 text-blue-600" />
-                            <p className="text-sm text-gray-600 font-medium">Processing</p>
+                            <p className="text-xs text-gray-600 font-medium">Confirmed</p>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">
-                            {orders.filter(o => ['confirmed', 'processing', 'shipped'].includes(o.status)).length}
+                        <p className="text-2xl font-bold text-blue-700">
+                            {orders.filter(o => o.status === 'confirmed').length}
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-purple-100">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Package className="w-5 h-5 text-purple-600" />
+                            <p className="text-xs text-gray-600 font-medium">Processing</p>
+                        </div>
+                        <p className="text-2xl font-bold text-purple-700">
+                            {orders.filter(o => o.status === 'processing').length}
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-indigo-100">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Package className="w-5 h-5 text-indigo-600" />
+                            <p className="text-xs text-gray-600 font-medium">Shipped</p>
+                        </div>
+                        <p className="text-2xl font-bold text-indigo-700">
+                            {orders.filter(o => o.status === 'shipped').length}
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-green-100">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Package className="w-5 h-5 text-green-600" />
+                            <p className="text-xs text-gray-600 font-medium">Delivered</p>
+                        </div>
+                        <p className="text-2xl font-bold text-green-700">
+                            {orders.filter(o => o.status === 'delivered').length}
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-red-100">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Package className="w-5 h-5 text-red-600" />
+                            <p className="text-xs text-gray-600 font-medium">Cancelled</p>
+                        </div>
+                        <p className="text-2xl font-bold text-red-700">
+                            {orders.filter(o => o.status === 'cancelled').length}
                         </p>
                     </div>
                     <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-emerald-100">
                         <div className="flex items-center gap-2 mb-2">
                             <DollarSign className="w-5 h-5 text-emerald-600" />
-                            <p className="text-sm text-gray-600 font-medium">Revenue</p>
+                            <p className="text-xs text-gray-600 font-medium">Revenue</p>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">
-                            ₹{orders.reduce((sum, o) => sum + o.totalPrice, 0).toLocaleString()}
+                        <p className="text-lg font-bold text-emerald-700">
+                            ₹{calculateRevenue().toLocaleString()}
                         </p>
+                        <p className="text-xs text-gray-500 mt-1">Confirmed+</p>
                     </div>
                 </div>
 

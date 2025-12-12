@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
+import dbConnect from '@/lib/db';
 import User from '@/models/User';
+
+// Mark as dynamic route to prevent static generation errors
+export const dynamic = 'force-dynamic';
 
 // GET - Make current user admin (temporary endpoint for setup)
 export async function GET(req: NextRequest) {

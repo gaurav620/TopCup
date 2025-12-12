@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema({
     // Order Status
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'preparing', 'ready', 'out-for-delivery', 'delivered', 'cancelled'],
+        enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     },
     // Payment Information
@@ -101,8 +101,8 @@ const orderSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Indexes for performance
-orderSchema.index({ orderId: 1 });
+// Indexes for performance  
+// Note: orderId already has unique index from schema definition
 orderSchema.index({ 'customer.email': 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ deliveryPartner: 1 });
