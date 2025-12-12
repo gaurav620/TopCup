@@ -23,14 +23,17 @@ export async function GET(req: NextRequest) {
         const Order = (await import('@/models/Order')).default;
 
         // Find order by orderId (this is the field name in Order.js)
-        const order = await Order.findOne({ orderId: orderNumber }).lean();
+        const orderDoc = await Order.findOne({ orderId: orderNumber }).lean();
 
-        if (!order) {
+        if (!orderDoc) {
             return NextResponse.json(
                 { error: 'Order not found. Please check your order number.' },
                 { status: 404 }
             );
         }
+
+        // Type assertion for Order.js schema
+        const order = orderDoc as any;
 
         // Map order status to tracking steps
         const statusSteps: Record<string, number> = {
@@ -42,7 +45,7 @@ export async function GET(req: NextRequest) {
             cancelled: 0
         };
 
-        const currentStep = statusSteps[order.status] || 1;
+        const currentStep = statusSteps[order.status as string] || 1;
         const createdDate = new Date(order.createdAt);
         const formatTime = (date: Date) => date.toLocaleString('en-US', {
             month: 'short',
@@ -87,7 +90,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({
                 success: true,
                 order: {
-                    number: order.orderId,
+                    number: order.orderId as string,
                     status: 'Order Cancelled',
                     cancelled: true,
                     steps: [
@@ -119,8 +122,8 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({
             success: true,
             order: {
-                number: order.orderId,
-                status: statusDisplay[order.status] || 'Processing',
+                number: order.orderId as string,
+                status: statusDisplay[order.status as string] || 'Processing',
                 cancelled: false,
                 steps
             }
