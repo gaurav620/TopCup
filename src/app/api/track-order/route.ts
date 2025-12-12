@@ -35,13 +35,14 @@ export async function GET(req: NextRequest) {
         // Type assertion for Order.js schema
         const order = orderDoc as any;
 
-        // Map order status to tracking steps
+        // Map order status to tracking steps - MUST match Order.js enum values
         const statusSteps: Record<string, number> = {
             pending: 1,
             confirmed: 2,
-            processing: 3,
-            shipped: 4,
-            delivered: 5,
+            preparing: 3,      // Order.js uses 'preparing' not 'processing'
+            ready: 4,          // Order.js has 'ready' status
+            'out-for-delivery': 5,  // Order.js uses 'out-for-delivery' not 'shipped'
+            delivered: 6,
             cancelled: 0
         };
 
@@ -74,14 +75,19 @@ export async function GET(req: NextRequest) {
                 completed: currentStep >= 3
             },
             {
-                title: 'Out for Delivery',
-                time: currentStep >= 4 ? 'On the way to you' : 'Not shipped yet',
+                title: 'Ready for Pickup',
+                time: currentStep >= 4 ? 'Order ready, waiting for delivery partner' : 'Not ready yet',
                 completed: currentStep >= 4
             },
             {
-                title: 'Delivered',
-                time: currentStep >= 5 ? 'Delivered successfully' : currentStep === 4 ? 'Arriving soon' : 'Pending',
+                title: 'Out for Delivery',
+                time: currentStep >= 5 ? 'On the way to you' : 'Not shipped yet',
                 completed: currentStep >= 5
+            },
+            {
+                title: 'Delivered',
+                time: currentStep >= 6 ? 'Delivered successfully' : currentStep === 5 ? 'Arriving soon' : 'Pending',
+                completed: currentStep >= 6
             }
         ];
 
@@ -110,12 +116,13 @@ export async function GET(req: NextRequest) {
             });
         }
 
-        // Map status to display name
+        // Map status to display name - MUST match Order.js enum
         const statusDisplay: Record<string, string> = {
             pending: 'Order Placed',
             confirmed: 'Order Confirmed',
-            processing: 'Preparing Your Order',
-            shipped: 'Out for Delivery',
+            preparing: 'Preparing Your Order',
+            ready: 'Ready for Pickup',
+            'out-for-delivery': 'Out for Delivery',
             delivered: 'Delivered'
         };
 
