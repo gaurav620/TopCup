@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight, Tag, Truck, X, Check } from 'lucide-react';
@@ -11,9 +11,15 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 
 export default function CartPage() {
-    const { items, updateQuantity, removeItem, clearCart, getSubtotal } = useCartStore();
+    const { items, updateQuantity, removeItem, clearCart, getSubtotal, _hasHydrated } = useCartStore();
     const { appliedCoupon, applyCoupon, removeCoupon, calculateDiscount, availableCoupons } = useCouponStore();
     const [couponCode, setCouponCode] = useState('');
+    const [isHydrated, setIsHydrated] = useState(false);
+
+    // Wait for hydration to prevent flash of empty cart
+    useEffect(() => {
+        setIsHydrated(_hasHydrated);
+    }, [_hasHydrated]);
 
     const subtotal = getSubtotal();
     const couponDiscount = calculateDiscount(subtotal);
@@ -40,7 +46,20 @@ export default function CartPage() {
         toast.success('Coupon removed');
     };
 
+    // Show loading state while hydrating
+    if (!isHydrated) {
+        return (
+            <div className="min-h-[70vh] flex items-center justify-center">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading cart...</p>
+                </div>
+            </div>
+        );
+    }
+
     if (items.length === 0) {
+
         return (
             <div className="min-h-[70vh] flex flex-col items-center justify-center py-16">
                 <div className="w-24 h-24 rounded-full bg-cream-100 flex items-center justify-center mb-6">

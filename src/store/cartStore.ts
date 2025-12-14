@@ -14,6 +14,7 @@ export interface CartItem {
 interface CartState {
     items: CartItem[];
     isOpen: boolean;
+    _hasHydrated: boolean;
 
     // Actions
     addItem: (item: Omit<CartItem, 'quantity'>) => void;
@@ -22,6 +23,7 @@ interface CartState {
     clearCart: () => void;
     toggleCart: () => void;
     setCartOpen: (isOpen: boolean) => void;
+    setHasHydrated: (state: boolean) => void;
 
     // Computed
     getTotalItems: () => number;
@@ -34,6 +36,7 @@ export const useCartStore = create<CartState>()(
         (set, get) => ({
             items: [],
             isOpen: false,
+            _hasHydrated: false,
 
             addItem: (item) => {
                 const items = get().items;
@@ -78,6 +81,10 @@ export const useCartStore = create<CartState>()(
                 set({ isOpen });
             },
 
+            setHasHydrated: (state) => {
+                set({ _hasHydrated: state });
+            },
+
             getTotalItems: () => {
                 return get().items.reduce((total, item) => total + item.quantity, 0);
             },
@@ -99,6 +106,9 @@ export const useCartStore = create<CartState>()(
             name: 'topcup-cart',
             storage: createJSONStorage(() => localStorage),
             partialize: (state) => ({ items: state.items }),
+            onRehydrateStorage: () => (state) => {
+                state?.setHasHydrated(true);
+            },
         }
     )
 );
