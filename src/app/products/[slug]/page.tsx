@@ -460,6 +460,171 @@ const PRODUCTS_DB: Record<string, any> = {
         deliveryInfo: 'Free delivery',
         reviews: [],
     },
+
+    // CHRISTMAS SPECIAL PRODUCTS
+    'christmas-plum-cake': {
+        _id: 'xmas-1',
+        name: 'Christmas Plum Cake',
+        slug: 'christmas-plum-cake',
+        description: 'Traditional Christmas plum cake loaded with rich fruits, nuts, and aromatic spices. Aged to perfection for the festive season. A must-have for your Christmas celebrations!',
+        shortDescription: 'Traditional fruit cake',
+        price: 1200,
+        discountPrice: 999,
+        category: 'cakes',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1577058151253-500f82ac5fc7?w=800'],
+        weight: '1kg',
+        servings: '12-15 people',
+        ingredients: ['Dried Fruits', 'Nuts', 'Spices', 'Rum', 'Butter'],
+        averageRating: 4.9,
+        totalReviews: 145,
+        isBestseller: true,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [
+            { user: 'Maria C.', rating: 5, comment: 'Best Christmas cake ever! So rich and flavorful.', date: '1 day ago' },
+            { user: 'John D.', rating: 5, comment: 'Perfect for the holidays. Family loved it!', date: '3 days ago' },
+        ],
+    },
+    'gingerbread-house-cake': {
+        _id: 'xmas-2',
+        name: 'Gingerbread House Cake',
+        slug: 'gingerbread-house-cake',
+        description: 'Adorable gingerbread house shaped cake with spiced sponge, cream cheese frosting, and decorated with edible gingerbread cookies. A showstopper for your Christmas table!',
+        shortDescription: 'Decorative gingerbread cake',
+        price: 1500,
+        discountPrice: 1299,
+        category: 'cakes',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1545157308-45119d15c01f?w=800'],
+        weight: '1.2kg',
+        servings: '15-18 people',
+        ingredients: ['Gingerbread', 'Cream Cheese', 'Molasses', 'Cinnamon', 'Ginger'],
+        averageRating: 4.8,
+        totalReviews: 98,
+        isFeatured: true,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [
+            { user: 'Sarah K.', rating: 5, comment: 'Absolutely stunning! Kids were amazed.', date: '2 days ago' },
+        ],
+    },
+    'snow-white-vanilla-cake': {
+        _id: 'xmas-3',
+        name: 'Snow White Vanilla Cake',
+        slug: 'snow-white-vanilla-cake',
+        description: 'Pure and elegant vanilla cake with white chocolate ganache and coconut flakes. Light as snow and perfect for winter celebrations.',
+        shortDescription: 'White chocolate vanilla cake',
+        price: 800,
+        discountPrice: 649,
+        category: 'cakes',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=800'],
+        weight: '800g',
+        servings: '10-12 people',
+        ingredients: ['Vanilla', 'White Chocolate', 'Coconut', 'Cream'],
+        averageRating: 4.7,
+        totalReviews: 67,
+        deliveryInfo: 'Same day delivery available',
+        reviews: [],
+    },
+    'santas-surprise-box': {
+        _id: 'xmas-4',
+        name: "Santa's Surprise Box",
+        slug: 'santas-surprise-box',
+        description: 'Special Christmas gift box filled with assorted treats, chocolates, cookies, and a mini cake. Perfect surprise gift for loved ones this Christmas!',
+        shortDescription: 'Christmas gift hamper',
+        price: 2500,
+        discountPrice: 1999,
+        category: 'gifts',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800'],
+        servings: 'Multiple items',
+        averageRating: 4.9,
+        totalReviews: 156,
+        isBestseller: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [
+            { user: 'Robert M.', rating: 5, comment: 'Kids absolutely loved the surprise!', date: '1 day ago' },
+        ],
+    },
+    'christmas-joy-hamper': {
+        _id: 'xmas-5',
+        name: 'Christmas Joy Hamper',
+        slug: 'christmas-joy-hamper',
+        description: 'Premium Christmas hamper with luxury chocolates, gourmet cookies, festive decorations, and premium tea selection. Spread the joy of Christmas!',
+        shortDescription: 'Premium festive hamper',
+        price: 3500,
+        discountPrice: 2999,
+        category: 'gifts',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800'],
+        servings: 'Multiple items',
+        averageRating: 4.8,
+        totalReviews: 189,
+        isFeatured: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [
+            { user: 'Emily T.', rating: 5, comment: 'Beautiful packaging and quality products!', date: '2 days ago' },
+        ],
+    },
+    'festive-cupcake-set': {
+        _id: 'xmas-6',
+        name: 'Festive Cupcake Set',
+        slug: 'festive-cupcake-set',
+        description: 'Set of 12 beautifully decorated Christmas cupcakes with various flavors including chocolate, vanilla, red velvet, and gingerbread. Perfect for parties!',
+        shortDescription: 'Christmas cupcakes (12 pcs)',
+        price: 900,
+        discountPrice: 749,
+        category: 'snacks',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1599785209796-786432b228bc?w=800'],
+        weight: '600g',
+        servings: '12 cupcakes',
+        ingredients: ['Assorted Flavors', 'Buttercream', 'Festive Decorations'],
+        averageRating: 4.6,
+        totalReviews: 234,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'candy-cane-cookies': {
+        _id: 'xmas-7',
+        name: 'Candy Cane Cookies',
+        slug: 'candy-cane-cookies',
+        description: 'Delicious peppermint flavored cookies shaped like candy canes. Crunchy, festive, and perfect with hot chocolate!',
+        shortDescription: 'Peppermint cookies',
+        price: 650,
+        discountPrice: 499,
+        category: 'snacks',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800'],
+        weight: '400g',
+        servings: '20-25 cookies',
+        ingredients: ['Peppermint', 'Sugar', 'Butter', 'Flour'],
+        averageRating: 4.7,
+        totalReviews: 178,
+        deliveryInfo: 'Same day delivery',
+        reviews: [],
+    },
+    'christmas-mega-combo': {
+        _id: 'xmas-8',
+        name: 'Christmas Mega Combo',
+        slug: 'christmas-mega-combo',
+        description: 'Ultimate Christmas combo package with 1kg cake, gift hamper, decorations, party essentials, and festive treats. Everything you need for a grand celebration!',
+        shortDescription: 'Complete Christmas package',
+        price: 5000,
+        discountPrice: 3999,
+        category: 'combos',
+        subcategory: 'Christmas Specials',
+        images: ['https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800'],
+        servings: 'Multiple items',
+        averageRating: 5.0,
+        totalReviews: 267,
+        isBestseller: true,
+        isFeatured: true,
+        deliveryInfo: 'Free delivery',
+        reviews: [
+            { user: 'David L.', rating: 5, comment: 'Best value for money! Party was a huge success.', date: '1 day ago' },
+        ],
+    },
 };
 
 const relatedProducts: Product[] = [
@@ -597,8 +762,8 @@ export default function ProductDetailPage() {
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
                                         className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${selectedImage === idx
-                                                ? 'border-primary-500 scale-105'
-                                                : 'border-transparent hover:border-gray-300'
+                                            ? 'border-primary-500 scale-105'
+                                            : 'border-transparent hover:border-gray-300'
                                             }`}
                                     >
                                         <Image src={img} alt="" width={150} height={150} className="w-full h-full object-cover" />
@@ -621,8 +786,8 @@ export default function ProductDetailPage() {
                                         <Star
                                             key={i}
                                             className={`w-5 h-5 ${i < Math.floor(product.averageRating)
-                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'text-gray-300'
+                                                ? 'fill-yellow-400 text-yellow-400'
+                                                : 'text-gray-300'
                                                 }`}
                                         />
                                     ))}
