@@ -18,7 +18,7 @@ export default function AddDeliveryPartner() {
         workingArea: 'Gurgaon'
     });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 

@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import bcrypt from 'bcryptjs';
 
 // GET all delivery partners
-export async function GET(request) {
+export async function GET(request: NextRequest) {
     try {
         await connectDB();
 
@@ -12,7 +12,7 @@ export async function GET(request) {
         const status = searchParams.get('status');
         const search = searchParams.get('search');
 
-        let query = {};
+        let query: any = {};
 
         if (status && status !== 'all') {
             query.status = status;
@@ -46,7 +46,7 @@ export async function GET(request) {
 }
 
 // POST create new delivery partner
-export async function POST(request) {
+export async function POST(request: NextRequest) {
     try {
         await connectDB();
 

@@ -28,9 +28,9 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            orders: orders.map(order => ({
+            orders: orders.map((order: any) => ({
                 ...order,
-                _id: order._id.toString(),
+                _id: String(order._id),
                 // Map customer to user format for frontend compatibility
                 user: order.customer || { name: 'Guest', email: 'N/A' },
                 orderNumber: (order as any).orderNumber || (order as any).orderId,
@@ -79,8 +79,8 @@ export async function PUT(req: NextRequest) {
             success: true,
             message: 'Order status updated successfully',
             order: {
-                ...order,
-                _id: order._id.toString(),
+                ...(order as any),
+                _id: String((order as any)._id),
             }
         });
     } catch (error: any) {

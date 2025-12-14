@@ -5,9 +5,23 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, Search, Edit, Trash2, User, Phone, Bike, TrendingUp, ChevronLeft } from 'lucide-react';
 
+interface DeliveryPartner {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    partnerId: string;
+    vehicleType: string;
+    vehicleNumber: string;
+    status: string;
+    totalDeliveries: number;
+    rating: number;
+    totalEarnings: number;
+}
+
 export default function DeliveryPartners() {
     const router = useRouter();
-    const [partners, setPartners] = useState([]);
+    const [partners, setPartners] = useState<DeliveryPartner[]>([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
@@ -39,7 +53,7 @@ export default function DeliveryPartners() {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this delivery partner?')) return;
 
         try {
@@ -166,8 +180,8 @@ export default function DeliveryPartners() {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${partner.status === 'active' ? 'bg-green-100 text-green-700' :
-                                                partner.status === 'inactive' ? 'bg-gray-100 text-gray-700' :
-                                                    'bg-yellow-100 text-yellow-700'
+                                            partner.status === 'inactive' ? 'bg-gray-100 text-gray-700' :
+                                                'bg-yellow-100 text-yellow-700'
                                             }`}>
                                             {partner.status}
                                         </span>

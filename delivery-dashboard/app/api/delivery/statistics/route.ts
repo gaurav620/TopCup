@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import DeliveryPartner from '@/models/DeliveryPartner';
 
 // GET delivery partner statistics
-export async function GET(request) {
+export async function GET(request: NextRequest) {
     try {
         await connectDB();
 

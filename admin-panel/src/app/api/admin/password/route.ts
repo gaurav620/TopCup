@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Admin from '@/models/Admin';
 import bcrypt from 'bcryptjs';
 
 // Change admin password
-export async function PUT(request) {
+export async function PUT(request: NextRequest) {
     try {
         await connectDB();
 

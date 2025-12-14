@@ -5,9 +5,17 @@ import { useRouter } from 'next/navigation';
 import { Shield, Plus, Search, Edit, Trash2, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
+interface Admin {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    createdAt: string;
+}
+
 export default function AdminsPage() {
     const router = useRouter();
-    const [admins, setAdmins] = useState([]);
+    const [admins, setAdmins] = useState<Admin[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
 
@@ -112,8 +120,8 @@ export default function AdminsPage() {
                                                 <td className="py-4 px-4 text-gray-600">{admin.email}</td>
                                                 <td className="py-4 px-4">
                                                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${admin.role === 'super-admin'
-                                                            ? 'bg-purple-100 text-purple-700'
-                                                            : 'bg-indigo-100 text-indigo-700'
+                                                        ? 'bg-purple-100 text-purple-700'
+                                                        : 'bg-indigo-100 text-indigo-700'
                                                         }`}>
                                                         {admin.role}
                                                     </span>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Gift, Sparkles, Star, Phone, ShoppingBag, Percent } from 'lucide-react';
 import ProductCard, { Product } from '@/components/product/ProductCard';
@@ -88,6 +89,30 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+    const [sliderProducts, setSliderProducts] = useState(christmasProducts);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+
+    // Fetch products from database
+    useEffect(() => {
+        async function fetchProducts() {
+            try {
+                const response = await fetch('/api/products?featured=true&limit=8');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.products && data.products.length > 0) {
+                        setSliderProducts(data.products);
+                    }
+                }
+            } catch (error) {
+                console.log('Using demo products:', error);
+                // Keep using christmasProducts as fallback
+            } finally {
+                setIsLoadingProducts(false);
+            }
+        }
+
+        fetchProducts();
+    }, []);
     return (
         <div className="min-h-screen relative">
             {/* Snowfall Animation */}
@@ -114,10 +139,17 @@ export default function HomePage() {
             {/* Christmas Special Slider */}
             <section className="py-12 bg-gradient-to-b from-cream-50 to-white">
                 <div className="container-custom">
-                    <ProductSlider
-                        products={christmasProducts}
-                        title="🎅 Christmas Specials 🎄"
-                    />
+                    {isLoadingProducts ? (
+                        <div className="text-center py-12">
+                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                            <p className="mt-4 text-gray-600">Loading amazing products...</p>
+                        </div>
+                    ) : (
+                        <ProductSlider
+                            products={sliderProducts}
+                            title="🎅 Featured Products 🎄"
+                        />
+                    )}
                 </div>
             </section>
 

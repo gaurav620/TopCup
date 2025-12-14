@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Order from '@/models/Order';
 
 // GET assigned orders for delivery partner
-export async function GET(request) {
+export async function GET(request: NextRequest) {
     try {
         await connectDB();
 
@@ -18,7 +18,7 @@ export async function GET(request) {
             }, { status: 400 });
         }
 
-        let query = { deliveryPartner: partnerId };
+        let query: any = { deliveryPartner: partnerId };
 
         // Filter by delivery status
         if (status && status !== 'all') {

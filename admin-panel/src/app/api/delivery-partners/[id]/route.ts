@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import bcrypt from 'bcryptjs';
 
 // GET single delivery partner
-export async function GET(request, { params }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         await connectDB();
 
@@ -31,7 +31,7 @@ export async function GET(request, { params }) {
 }
 
 // PUT update delivery partner
-export async function PUT(request, { params }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         await connectDB();
 
@@ -81,7 +81,7 @@ export async function PUT(request, { params }) {
 }
 
 // DELETE delivery partner
-export async function DELETE(request, { params }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         await connectDB();
 

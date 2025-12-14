@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Order from '@/models/Order';
 import DeliveryPartner from '@/models/DeliveryPartner';
 
 // Update order delivery status
-export async function PUT(request, { params }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         await connectDB();
 

@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import bcrypt from 'bcryptjs';
 
-// Delivery partner login
-export async function POST(request) {
+// Login delivery partner
+export async function POST(request: NextRequest) {
     try {
         await connectDB();
 
