@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
 import AuthProvider from '@/components/providers/AuthProvider';
 import { LanguageProvider } from '@/context/LanguageContext';
+// import FirebaseProvider from '@/components/FirebaseProvider';
 
 const outfit = Outfit({
     subsets: ['latin'],
@@ -78,24 +79,11 @@ export default function RootLayout({
             <head>
                 <link rel="manifest" href="/manifest.json" />
                 <meta name="theme-color" content="#f97316" />
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            if ('serviceWorker' in navigator) {
-                                window.addEventListener('load', function() {
-                                    navigator.serviceWorker.register('/sw.js').then(
-                                        function(registration) { console.log('SW registered'); },
-                                        function(err) { console.log('SW registration failed'); }
-                                    );
-                                });
-                            }
-                        `,
-                    }}
-                />
             </head>
             <body className="min-h-screen flex flex-col">
                 <LanguageProvider>
                     <AuthProvider>
+                        {/* <FirebaseProvider> */}
                         <Toaster
                             position="top-center"
                             toastOptions={{
@@ -124,6 +112,7 @@ export default function RootLayout({
                         <Navbar />
                         <main className="flex-1">{children}</main>
                         <Footer />
+                        {/* </FirebaseProvider> */}
                     </AuthProvider>
                 </LanguageProvider>
             </body>

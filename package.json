@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "firebase": "^12.6.0",
     "framer-motion": "^11.13.1",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.468.0",
