@@ -46,34 +46,41 @@ const createInitialAdmin = async () => {
         await mongoose.connect(MONGODB_URI);
         console.log('Connected to MongoDB');
 
-        // Check if admin already exists
-        const existingAdmin = await Admin.findOne({ role: 'super-admin' });
-
-        if (existingAdmin) {
-            console.log('✅ Super admin already exists:', existingAdmin.email);
-            console.log('\nLogin credentials:');
-            console.log('Email:', existingAdmin.email);
-            console.log('Password: (use the password you set when creating this admin)');
-            process.exit(0);
-        }
-
         // Get credentials from environment or use defaults
         const adminEmail = process.env.ADMIN_EMAIL || 'admin@topcup.com';
-        const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@123';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
         const adminName = process.env.ADMIN_NAME || 'Super Admin';
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(adminPassword, 10);
+        // Check if admin already exists
+        let admin = await Admin.findOne({ email: adminEmail });
 
-        // Create admin
-        const admin = await Admin.create({
-            email: adminEmail,
-            password: hashedPassword,
-            name: adminName,
-            role: 'super-admin'
-        });
+        if (admin) {
+            console.log('📝 Super admin already exists. Updating password...');
+            // Hash new password
+            const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
-        console.log('✅ Super admin created successfully!');
+            // Update password
+            admin.password = hashedPassword;
+            admin.passwordChangedAt = new Date();
+            await admin.save();
+
+            console.log('✅ Admin password updated successfully!');
+        } else {
+            console.log('📝 Creating new super admin...');
+            // Hash password
+            const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+            // Create admin
+            admin = await Admin.create({
+                email: adminEmail,
+                password: hashedPassword,
+                name: adminName,
+                role: 'super-admin'
+            });
+
+            console.log('✅ Super admin created successfully!');
+        }
+
         console.log('\n📧 Login Credentials:');
         console.log('Email:', adminEmail);
         console.log('Password:', adminPassword);
