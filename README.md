@@ -21,24 +21,61 @@ TopCup is a full-stack e-commerce ecosystem consisting of three interconnected a
 2. **Admin Panel** (Port 5001) - Complete management dashboard
 3. **Delivery Partner Dashboard** (Port 5002) - Delivery execution platform
 
-## 🏗️ Architecture
+## 🏗️ Project Architecture
+
+TopCup consists of three independent Next.js applications sharing a single MongoDB database.
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Customer App   │     │   Admin Panel   │     │ Delivery Dash   │
-│   Port 3000     │     │   Port 5001     │     │   Port 5002     │
-└────────┬────────┘     └────────┬────────┘     └────────┬────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                        TopCup E-Commerce Platform                   │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│  Customer App    │    │  Admin Panel     │    │ Delivery Dash    │
+│  Port: 3000      │    │  Port: 5001      │    │  Port: 5002      │
+├──────────────────┤    ├──────────────────┤    ├──────────────────┤
+│ • Browse Products│    │ • Manage Products│    │ • View Assigned  │
+│ • Add to Cart    │    │ • Manage Users   │    │   Orders         │
+│ • Place Orders   │    │ • Manage Orders  │    │ • Update Status  │
+│ • Track Delivery │    │ • Assign Delivery│    │ • Track Earnings │
+│ • User Auth      │    │ • Analytics      │    │ • View History   │
+└────────┬─────────┘    └────────┬─────────┘    └────────┬─────────┘
          │                       │                       │
-         └───────────────┬───────┴───────────┬───────────┘
-                         │                   │
-                    ┌────▼───────────────────▼────┐
-                    │    MongoDB Database         │
-                    │  - Users                    │
-                    │  - Products                 │
-                    │  - Orders                   │
-                    │  - DeliveryPartners         │
-                    └─────────────────────────────┘
+         │   ┌───────────────────┴───────────────────┐   │
+         │   │                                       │   │
+         └───┼──────────► API Routes ◄──────────────┼───┘
+             │                                       │
+             └───────────────┬───────────────────────┘
+                             │
+                    ┌────────▼─────────┐
+                    │  MongoDB Atlas    │
+                    │  or Local MongoDB │
+                    ├───────────────────┤
+                    │ Collections:      │
+                    │ • users           │
+                    │ • products        │
+                    │ • orders          │
+                    │ • deliverypartners│
+                    │ • admins          │
+                    └───────────────────┘
+
+Data Flow:
+1. Customer places order → Stored in MongoDB
+2. Admin assigns order to delivery partner → Order updated
+3. Delivery partner updates status → Customer sees real-time updates
+4. All apps share same database for consistency
 ```
+
+### Technology Stack per Application
+
+| Component | Customer App | Admin Panel | Delivery Dashboard |
+|-----------|--------------|-------------|-------------------|
+| **Framework** | Next.js 14 | Next.js 14 | Next.js 14 |
+| **Styling** | Tailwind CSS | Tailwind CSS | Tailwind CSS |
+| **State** | Zustand | Zustand | React Hooks |
+| **Database** | MongoDB (Mongoose) | MongoDB (Mongoose) | MongoDB (Mongoose) |
+| **Auth** | NextAuth.js | Custom Auth | Custom Auth |
+| **Animations** | Framer Motion | Framer Motion | - |
 
 ## 📦 Tech Stack
 
@@ -57,37 +94,53 @@ TopCup is a full-stack e-commerce ecosystem consisting of three interconnected a
 - **bcryptjs** - Password hashing
 - **Next.js API Routes** - Backend endpoints
 
-## 🚀 Quick Start
+## 🚀 Getting Started - Quick Setup Guide
+
+Follow these steps to get all three applications running on your local machine.
 
 ### Prerequisites
 
+Ensure you have the following installed:
+
 ```bash
-node >= 18.0.0
-npm >= 9.0.0
-MongoDB >= 6.0
+# Check versions
+node --version   # Should be >= 18.0.0
+npm --version    # Should be >= 9.0.0
 ```
 
-### Installation
+### Step 1: Clone Repository
 
-1. **Clone the repository:**
 ```bash
 git clone https://github.com/gaurav620/TopCup.git
 cd TopCup
 ```
 
-2. **Install MongoDB and start it:**
+### Step 2: Setup MongoDB
+
+Choose one of the following options:
+
+**Option A: Local MongoDB (Recommended for Development)**
 ```bash
 # macOS
 brew tap mongodb/brew
-brew install mongodb-community
-brew services start mongodb-community
+brew install mongodb-community@6.0
+brew services start mongodb-community@6.0
 
-# Or use MongoDB Atlas (cloud)
+# Verify MongoDB is running
+brew services list | grep mongodb
 ```
 
-3. **Install dependencies for all applications:**
+**Option B: MongoDB Atlas (Cloud)**
+1. Visit [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a free cluster
+3. Get your connection string (format: `mongodb+srv://username:password@cluster.mongodb.net/topcup`)
+
+### Step 3: Install Dependencies
+
+Install dependencies for all three applications:
+
 ```bash
-# Customer App
+# Customer App (root directory)
 npm install
 
 # Admin Panel
@@ -101,50 +154,93 @@ npm install
 cd ..
 ```
 
-4. **Configure environment variables:**
+### Step 4: Configure Environment Variables
 
 Create `.env.local` files in each directory:
 
-**Root (Customer App) `.env.local`:**
+**Root Directory `.env.local` (Customer App):**
 ```env
+# Database
 MONGODB_URI=mongodb://localhost:27017/topcup
-NEXTAUTH_SECRET=your-secret-key-here
+
+# Authentication
+NEXTAUTH_SECRET=your-random-secret-key-min-32-chars
 NEXTAUTH_URL=http://localhost:3000
+
+# Optional: Cloudinary for image uploads
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ```
 
-**Admin Panel `.env.local`:**
+**`admin-panel/.env.local` (Admin Panel):**
 ```env
+# Database
 MONGODB_URI=mongodb://localhost:27017/topcup
-NEXTAUTH_SECRET=admin-secret-key-here
+
+# Authentication
+NEXTAUTH_SECRET=admin-panel-secret-key-min-32-chars
 NEXTAUTH_URL=http://localhost:5001
 ```
 
-**Delivery Dashboard `.env.local`:**
+**`delivery-dashboard/.env.local` (Delivery Dashboard):**
 ```env
+# Database
 MONGODB_URI=mongodb://localhost:27017/topcup
-NEXTAUTH_SECRET=delivery-secret-key-here
+
+# Authentication
+NEXTAUTH_SECRET=delivery-dashboard-secret-key-min-32-chars
 NEXTAUTH_URL=http://localhost:5002
 ```
 
-5. **Start all applications:**
+> [!TIP]
+> Generate secure secrets using: `openssl rand -base64 32`
 
-Open 3 terminal windows:
+### Step 5: Verify Database Connection
+
+Test that MongoDB is accessible:
 
 ```bash
-# Terminal 1 - Customer App
-npm run dev
-# Runs on http://localhost:3000
+# If using local MongoDB, connect to verify
+mongosh
+# You should see: "Connected to: mongodb://127.0.0.1:27017"
+# Type 'exit' to quit
 
-# Terminal 2 - Admin Panel
-cd admin-panel
-npm run dev
-# Runs on http://localhost:5001
-
-# Terminal 3 - Delivery Dashboard
-cd delivery-dashboard
-npm run dev
-# Runs on http://localhost:5002
+# Or check if process is running
+ps aux | grep mongod
 ```
+
+### Step 6: Start All Applications
+
+Open **three separate terminal windows** and run each application:
+
+**Terminal 1 - Customer App:**
+```bash
+cd TopCup
+npm run dev
+# ✓ Ready on http://localhost:3000
+```
+
+**Terminal 2 - Admin Panel:**
+```bash
+cd TopCup/admin-panel
+npm run dev
+# ✓ Ready on http://localhost:5001
+```
+
+**Terminal 3 - Delivery Dashboard:**
+```bash
+cd TopCup/delivery-dashboard
+npm run dev
+# ✓ Ready on http://localhost:5002
+```
+
+### Step 7: Access Applications
+
+Open your browser and navigate to:
+
+- **Customer App:** [http://localhost:3000](http://localhost:3000)
+- **Admin Panel:** [http://localhost:5001](http://localhost:5001)
+- **Delivery Dashboard:** [http://localhost:5002](http://localhost:5002)
 
 ## 📱 Application URLs
 
@@ -371,13 +467,169 @@ For issues and questions:
 2. Create a new issue with detailed description
 3. Contact: gauravkumarmehta06@gmail.com
 
-## 🎯 Getting Help
+## 🎯 Troubleshooting Guide
 
-If you encounter issues:
-1. Check MongoDB is running: `brew services list`
-2. Verify all .env files are configured
-3. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
-4. Check port availability: `lsof -i :3000,:5001,:5002`
+### Common Issues and Solutions
+
+#### Issue 1: MongoDB Connection Failed
+
+**Error:** `MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017`
+
+**Solutions:**
+```bash
+# Check if MongoDB is running
+brew services list | grep mongodb
+
+# Start MongoDB if not running
+brew services start mongodb-community@6.0
+
+# Check MongoDB logs
+tail -f /usr/local/var/log/mongodb/mongo.log
+
+# Restart MongoDB
+brew services restart mongodb-community@6.0
+```
+
+#### Issue 2: Port Already in Use
+
+**Error:** `Error: listen EADDRINUSE: address already in use :::3000`
+
+**Solutions:**
+```bash
+# Find process using the port
+lsof -i :3000
+lsof -i :5001
+lsof -i :5002
+
+# Kill the process (replace PID with actual process ID)
+kill -9 <PID>
+
+# Or use different ports by editing package.json scripts
+```
+
+#### Issue 3: Environment Variables Not Loading
+
+**Problem:** Application can't connect to database or shows undefined values
+
+**Solutions:**
+1. Ensure `.env.local` files are in the correct directories:
+   - `TopCup/.env.local` (Customer App)
+   - `TopCup/admin-panel/.env.local` (Admin Panel)
+   - `TopCup/delivery-dashboard/.env.local` (Delivery Dashboard)
+
+2. Restart the dev server after creating/modifying `.env.local`
+
+3. Check file is not named `.env.local.txt` or similar
+
+4. Verify no syntax errors in `.env.local` (no spaces around `=`)
+
+#### Issue 4: Module Not Found Errors
+
+**Error:** `Module not found: Can't resolve 'xyz'`
+
+**Solutions:**
+```bash
+# Delete node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# For admin panel
+cd admin-panel
+rm -rf node_modules package-lock.json
+npm install
+cd ..
+
+# For delivery dashboard
+cd delivery-dashboard
+rm -rf node_modules package-lock.json
+npm install
+cd ..
+
+# Clear Next.js cache
+rm -rf .next
+cd admin-panel && rm -rf .next && cd ..
+cd delivery-dashboard && rm -rf .next && cd ..
+```
+
+#### Issue 5: Build Errors
+
+**Error:** TypeScript or ESLint errors during build
+
+**Solutions:**
+```bash
+# Run build to see exact errors
+npm run build
+
+# Check TypeScript errors
+npx tsc --noEmit
+
+# Fix common issues
+# - Missing dependencies: npm install
+# - Outdated packages: npm update
+# - Cache issues: rm -rf .next && npm run dev
+```
+
+#### Issue 6: Database Shows Empty Data
+
+**Problem:** Admin panel or apps show no data
+
+**Solutions:**
+1. Verify MongoDB connection string is correct
+2. Check if data exists:
+   ```bash
+   mongosh
+   use topcup
+   db.products.count()
+   db.users.count()
+   db.orders.count()
+   exit
+   ```
+
+3. Seed initial data via admin panel or MongoDB Compass
+
+#### Issue 7: Admin Login Not Working
+
+**Problem:** Can't login with default credentials
+
+**Solutions:**
+1. Default credentials (for development):
+   - Email: `admin`
+   - Password: `admin123`
+
+2. If still failing, check console for errors
+
+3. Verify `NEXTAUTH_SECRET` is set in `admin-panel/.env.local`
+
+4. Clear browser cookies and localStorage
+
+#### Quick Health Check Commands
+
+```bash
+# Check all required services
+node --version        # Should be >= 18
+npm --version         # Should be >= 9
+mongosh --version     # MongoDB shell
+brew services list    # Check MongoDB status
+
+# Test database connection
+mongosh mongodb://localhost:27017/topcup --eval "db.stats()"
+
+# Check if apps are running
+curl http://localhost:3000      # Customer App
+curl http://localhost:5001      # Admin Panel  
+curl http://localhost:5002      # Delivery Dashboard
+```
+
+### Getting Additional Help
+
+If you encounter issues not covered here:
+
+1. **Check Logs:** Look at terminal output for error messages
+2. **GitHub Issues:** [Create an issue](https://github.com/gaurav620/TopCup/issues) with:
+   - Error message
+   - Steps to reproduce
+   - Your environment (OS, Node version, MongoDB version)
+3. **Contact:** gauravkumarmehta06@gmail.com
 
 ---
 

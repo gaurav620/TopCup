@@ -10,11 +10,17 @@ export async function GET(req: NextRequest) {
         await dbConnect();
 
         // Get total revenue (Order.js model uses 'totalAmount', not 'totalPrice')
-        const revenueResult = await Order.aggregate([
-            { $match: { status: { $in: ['confirmed', 'processing', 'shipped', 'delivered'] } } },
-            { $group: { _id: null, total: { $sum: '$totalAmount' } } }
-        ]);
-        const totalRevenue = revenueResult[0]?.total || 0;
+        // Use try-catch for timeout handling during static generation
+        let totalRevenue = 0;
+        try {
+            const revenueResult = await Order.aggregate([
+                { $match: { status: { $in: ['confirmed', 'processing', 'shipped', 'delivered'] } } },
+                { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+            ], { maxTimeMS: 5000 });
+            totalRevenue = revenueResult[0]?.total || 0;
+        } catch (err: any) {
+            console.error('Revenue aggregate error:', err.message);
+        }
 
         // Get total orders
         const totalOrders = await Order.countDocuments();
@@ -26,9 +32,14 @@ export async function GET(req: NextRequest) {
         const totalUsers = await User.countDocuments();
 
         // Get orders by status
-        const ordersByStatus = await Order.aggregate([
-            { $group: { _id: '$status', count: { $sum: 1 } } }
-        ]);
+        let ordersByStatus: any[] = [];
+        try {
+            ordersByStatus = await Order.aggregate([
+                { $group: { _id: '$status', count: { $sum: 1 } } }
+            ], { maxTimeMS: 5000 });
+        } catch (err: any) {
+            console.error('Orders by status aggregate error:', err.message);
+        }
 
         // Get recent orders (without population since Order.js uses embedded customer data)
         const recentOrders = await Order.find()

@@ -80,9 +80,8 @@ const deliveryPartnerSchema = new mongoose.Schema({
 });
 
 // Index for faster queries
-deliveryPartnerSchema.index({ email: 1 });
+// Note: email and partnerId already have indexes via unique: true
 deliveryPartnerSchema.index({ status: 1, isAvailable: 1 });
-deliveryPartnerSchema.index({ partnerId: 1 });
 
 // Don't return password in queries
 deliveryPartnerSchema.methods.toJSON = function () {
