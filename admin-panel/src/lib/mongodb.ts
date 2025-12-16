@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+// Default to local MongoDB if not specified
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/topcup';
 
-if (!MONGODB_URI) {
-    throw new Error('Please define MONGODB_URI in your environment variables');
-}
+console.log('[MongoDB] URI configured:', MONGODB_URI.substring(0, 30) + '...');
 
 interface MongooseCache {
     conn: typeof mongoose | null;
