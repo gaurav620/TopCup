@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import bcrypt from 'bcryptjs';
 
 // Login delivery partner
 export async function POST(request: NextRequest) {
     try {
-        await connectDB();
+        await dbConnect();
 
         const body = await request.json();
         const { email, password } = body;

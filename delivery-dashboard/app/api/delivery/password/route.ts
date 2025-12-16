@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import bcrypt from 'bcryptjs';
 
 // Change delivery partner password
 export async function PUT(request: Request) {
     try {
-        await connectDB();
+        await dbConnect();
 
         const body = await request.json();
         const { partnerId, currentPassword, newPassword } = body;

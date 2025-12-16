@@ -40,7 +40,7 @@ export default function Navbar() {
     const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
     const { data: session } = useSession();
-    const cartItemsCount = useCartStore((state) => state.getTotalItems());
+    const cartItemsCount = useCartStore((state: { getTotalItems: () => number }) => state.getTotalItems());
 
     useEffect(() => {
         setMounted(true);

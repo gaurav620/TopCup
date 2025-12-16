@@ -98,7 +98,8 @@ export const useCartStore = create<CartState>()(
 
             getSubtotal: () => {
                 return get().items.reduce((total, item) => {
-                    return total + item.price * item.quantity;
+                    const price = item.discountPrice || item.price;
+                    return total + price * item.quantity;
                 }, 0);
             },
         }),

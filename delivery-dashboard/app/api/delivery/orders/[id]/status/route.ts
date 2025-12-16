@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
 import Order from '@/models/Order';
 import DeliveryPartner from '@/models/DeliveryPartner';
 
 // Update order delivery status
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        await connectDB();
+        await dbConnect();
 
         const body = await request.json();
         const { status, partnerId } = body;

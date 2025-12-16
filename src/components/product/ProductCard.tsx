@@ -33,7 +33,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, showQuickAdd = true }: ProductCardProps) {
     const [isHovered, setIsHovered] = useState(false);
-    const addItem = useCartStore((state) => state.addItem);
+    const addItem = useCartStore((state: { addItem: (item: CartItem) => void }) => state.addItem);
 
     // Wishlist store integration
     const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
@@ -55,6 +55,7 @@ export default function ProductCard({ product, showQuickAdd = true }: ProductCar
             id: product._id,
             name: product.name,
             price: product.price,
+            quantity: 1,
             discountPrice: product.discountPrice,
             image: product.images[0],
             weight: product.weight,
@@ -137,8 +138,8 @@ export default function ProductCard({ product, showQuickAdd = true }: ProductCar
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             className={`absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 z-10 ${isWishlisted
-                                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-                                    : 'bg-white/90 backdrop-blur-sm text-gray-600 hover:bg-white hover:text-red-500 shadow-lg'
+                                ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                                : 'bg-white/90 backdrop-blur-sm text-gray-600 hover:bg-white hover:text-red-500 shadow-lg'
                                 }`}
                         >
                             <Heart className={`w-5 h-5 transition-transform duration-300 ${isWishlisted ? 'fill-current scale-110' : ''}`} />

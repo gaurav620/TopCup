@@ -4,6 +4,9 @@ import Order from '@/models/Order';
 import User from '@/models/User';
 import Product from '@/models/Product';
 
+// Force dynamic rendering to prevent timeout during static generation
+export const dynamic = 'force-dynamic';
+
 // GET - Fetch dashboard stats
 export async function GET(req: NextRequest) {
     try {

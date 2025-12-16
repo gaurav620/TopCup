@@ -29,7 +29,7 @@ export default function FirebaseProvider({ children }: { children: React.ReactNo
       // Show a gentle prompt first
       setTimeout(() => {
         if (confirm('Would you like to receive notifications about your orders and special offers?')) {
-          requestNotificationPermission().then((token) => {
+          requestNotificationPermission().then((token: string | null) => {
             if (token) {
               // TODO: Send token to backend when user logs in
               console.log('FCM token obtained:', token);
@@ -94,7 +94,7 @@ export default function FirebaseProvider({ children }: { children: React.ReactNo
           );
         }
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error('Error in onMessageListener:', err);
       });
   }, []);

@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
 import DeliveryPartner from '@/models/DeliveryPartner';
 import PasswordReset from '@/models/PasswordReset';
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: any) {
     try {
-        await connectDB();
+        await dbConnect();
 
         const body = await request.json();
         const { token, newPassword } = body;

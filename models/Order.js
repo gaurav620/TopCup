@@ -102,7 +102,7 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Indexes for performance
-orderSchema.index({ orderId: 1 });
+// Note: orderId index is created automatically by unique: true constraint
 orderSchema.index({ 'customer.email': 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ deliveryPartner: 1 });

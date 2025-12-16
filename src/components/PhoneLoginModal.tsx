@@ -4,8 +4,8 @@
 import { useState } from 'react';
 import { sendOTP, verifyOTP } from '@/lib/phoneAuth';
 import toast from 'react-hot-toast';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 
 export default function PhoneLoginModal({ onClose, onSuccess }: {
     onClose: () => void;
@@ -87,7 +87,7 @@ export default function PhoneLoginModal({ onClose, onSuccess }: {
                                     placeholder="9876543210"
                                     maxLength={10}
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value.replace(/\D/g, ''))}
                                     className="flex-1"
                                 />
                             </div>
@@ -124,7 +124,7 @@ export default function PhoneLoginModal({ onClose, onSuccess }: {
                             placeholder="000000"
                             maxLength={6}
                             value={otp}
-                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOtp(e.target.value.replace(/\D/g, ''))}
                             className="text-center text-2xl tracking-widest"
                         />
 

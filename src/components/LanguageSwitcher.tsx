@@ -35,7 +35,7 @@ export default function LanguageSwitcher() {
                 aria-label="Select language"
             >
                 <Globe className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-medium text-gray-700">{localeNames[locale]}</span>
+                <span className="text-sm font-medium text-gray-700">{localeNames[locale as Locale]}</span>
                 <svg
                     className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"
@@ -48,7 +48,7 @@ export default function LanguageSwitcher() {
 
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                    {locales.map((loc) => (
+                    {locales.map((loc: Locale) => (
                         <button
                             key={loc}
                             onClick={() => handleLanguageChange(loc)}

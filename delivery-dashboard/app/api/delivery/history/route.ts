@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/mongodb';
 import Order from '@/models/Order';
+
+// Force dynamic rendering since we use request.url
+export const dynamic = 'force-dynamic';
 
 // GET delivery history (completed orders)
 export async function GET(request: NextRequest) {
     try {
-        await connectDB();
+        await dbConnect();
 
         const { searchParams } = new URL(request.url);
         const partnerId = searchParams.get('partnerId');
