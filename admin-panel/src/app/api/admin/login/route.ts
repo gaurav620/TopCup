@@ -1,7 +1,30 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Admin from '@/models/Admin';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/topcup';
+
+// Admin schema defined inline to ensure same mongoose instance
+const adminSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true, lowercase: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
+    role: { type: String, enum: ['super-admin', 'admin'], default: 'admin' },
+    lastLogin: Date,
+    passwordChangedAt: Date
+}, { timestamps: true });
+
+const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
+
+// Connect to MongoDB
+async function connectDB() {
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+    console.log('[Admin Login] 🔄 Connecting to MongoDB...');
+    await mongoose.connect(MONGODB_URI);
+    console.log('[Admin Login] ✅ Connected to MongoDB');
+}
 
 // Admin login with database authentication
 export async function POST(request: any) {
@@ -52,19 +75,25 @@ export async function POST(request: any) {
         await admin.save();
         console.log('[Admin Login] Login successful!');
 
-        // Return admin data (password excluded by toJSON method)
-        const adminData = admin.toJSON();
+        // Return admin data (exclude password)
+        const adminData = {
+            _id: admin._id,
+            email: admin.email,
+            name: admin.name,
+            role: admin.role
+        };
 
         return NextResponse.json({
             success: true,
             message: 'Login successful',
             data: adminData
         });
-    } catch (error) {
-        console.error('[Admin Login] Error:', error);
+    } catch (error: any) {
+        console.error('[Admin Login] Error:', error.message);
         return NextResponse.json({
             success: false,
             error: 'Login failed'
         }, { status: 500 });
     }
 }
+

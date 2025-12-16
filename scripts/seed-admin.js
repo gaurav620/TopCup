@@ -47,9 +47,9 @@ const createInitialAdmin = async () => {
         console.log('Connected to MongoDB');
 
         // Get credentials from environment or use defaults
-        const adminEmail = process.env.ADMIN_EMAIL || 'admin@topcup.com';
-        const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-        const adminName = process.env.ADMIN_NAME || 'Super Admin';
+        const adminEmail = process.env.ADMIN_EMAIL || 'gauravkumar495m122@gmail.com';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'gauravkumar495';
+        const adminName = process.env.ADMIN_NAME || 'Gaurav Kumar';
 
         // Check if admin already exists
         let admin = await Admin.findOne({ email: adminEmail });

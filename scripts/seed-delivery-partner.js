@@ -93,9 +93,9 @@ const createDeliveryPartner = async () => {
         console.log('Connected to MongoDB');
 
         // Partner credentials
-        const partnerEmail = 'delivery@topcup.com';
-        const partnerPassword = 'delivery123';
-        const partnerName = 'Test Delivery Partner';
+        const partnerEmail = 'gauravkumar495m122@gmail.com';
+        const partnerPassword = 'gauravkumar495';
+        const partnerName = 'Gaurav Kumar';
         const partnerPhone = '+919876543210';
 
         // Check if partner already exists

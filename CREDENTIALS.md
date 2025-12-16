@@ -10,8 +10,8 @@ This document contains all the login credentials for the three TopCup applicatio
 
 **Login Credentials:**
 ```
-Email: admin@topcup.com
-Password: admin123
+Email: gauravkumar495m122@gmail.com
+Password: gauravkumar495
 ```
 
 **Features Access:**
@@ -30,8 +30,8 @@ Password: admin123
 
 **Login Credentials:**
 ```
-Email: delivery@topcup.com
-Password: delivery123
+Email: gauravkumar495m122@gmail.com
+Password: gauravkumar495
 ```
 
 **Features Access:**
