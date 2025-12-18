@@ -22,8 +22,15 @@ export async function GET(request: NextRequest) {
         const featured = searchParams.get('featured');
         const bestseller = searchParams.get('bestseller');
 
-        // Build query
-        const query: any = { isAvailable: true };
+        // Build query - show products that are active/available OR have stock > 0
+        const query: any = {
+            $or: [
+                { isAvailable: true },
+                { status: 'active' },
+                { stock: { $gt: 0 } },
+                { isAvailable: { $exists: false } } // Show products without isAvailable field
+            ]
+        };
 
         if (category) {
             query.category = category;

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+// Default to local MongoDB if not specified
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/topcup';
 
 interface CachedConnection {
     conn: typeof mongoose | null;
@@ -18,14 +19,8 @@ if (!global.mongoose) {
 }
 
 async function dbConnect(): Promise<typeof mongoose> {
-    // Check if MongoDB URI is configured
-    if (!MONGODB_URI) {
-        console.warn('⚠️ MONGODB_URI not configured. Using demo mode.');
-        // In demo mode, throw a helpful error
-        throw new Error('Database not configured. Please set MONGODB_URI in .env.local');
-    }
-
     if (cached.conn) {
+        console.log('✅ Using cached MongoDB connection');
         return cached.conn;
     }
 
