@@ -1,7 +1,27 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Admin from '@/models/Admin';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/topcup';
+
+// Admin schema inline
+const adminSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
+    role: { type: String, enum: ['super-admin', 'admin'], default: 'admin' },
+    lastLogin: { type: Date },
+    passwordChangedAt: { type: Date }
+}, { timestamps: true });
+
+const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
+
+async function connectDB() {
+    if (mongoose.connection.readyState >= 1) return;
+    console.log('[Admins API] 🔄 Connecting to MongoDB...');
+    await mongoose.connect(MONGODB_URI);
+    console.log('[Admins API] ✅ Connected to MongoDB');
+}
 
 // GET all admins
 export async function GET(request: any) {
@@ -16,8 +36,8 @@ export async function GET(request: any) {
             success: true,
             data: admins
         });
-    } catch (error) {
-        console.error('Error fetching admins:', error);
+    } catch (error: any) {
+        console.error('[Admins API] Error fetching admins:', error.message);
         return NextResponse.json({
             success: false,
             error: 'Failed to fetch admins'
@@ -32,6 +52,7 @@ export async function POST(request: any) {
 
         const body = await request.json();
         const { name, email, password, role } = body;
+        console.log('[Admins API] Creating admin:', name, email);
 
         // Validation
         if (!name || !email || !password) {
@@ -42,7 +63,7 @@ export async function POST(request: any) {
         }
 
         // Check if admin already exists
-        const existingAdmin = await Admin.findOne({ email });
+        const existingAdmin = await Admin.findOne({ email: email.toLowerCase() });
         if (existingAdmin) {
             return NextResponse.json({
                 success: false,
@@ -52,28 +73,37 @@ export async function POST(request: any) {
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('[Admins API] Password hashed successfully');
 
         // Create admin
         const admin = await Admin.create({
             name,
-            email,
+            email: email.toLowerCase(),
             password: hashedPassword,
             role: role || 'admin'
         });
+        console.log('[Admins API] Admin created:', admin._id);
 
         // Remove password from response
-        const adminData = admin.toJSON();
+        const adminData = {
+            _id: admin._id,
+            name: admin.name,
+            email: admin.email,
+            role: admin.role,
+            createdAt: admin.createdAt
+        };
 
         return NextResponse.json({
             success: true,
             message: 'Admin created successfully',
             data: adminData
         }, { status: 201 });
-    } catch (error) {
-        console.error('Error creating admin:', error);
+    } catch (error: any) {
+        console.error('[Admins API] Error creating admin:', error.message);
         return NextResponse.json({
             success: false,
             error: 'Failed to create admin'
         }, { status: 500 });
     }
 }
+
