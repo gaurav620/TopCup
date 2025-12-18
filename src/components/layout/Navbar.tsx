@@ -203,7 +203,10 @@ export default function Navbar() {
                                                 )}
                                                 <hr className="my-2" />
                                                 <button
-                                                    onClick={() => signOut()}
+                                                    onClick={async () => {
+                                                        await signOut({ redirect: false });
+                                                        window.location.href = '/';
+                                                    }}
                                                     className="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors w-full"
                                                 >
                                                     <LogOut className="w-4 h-4" />

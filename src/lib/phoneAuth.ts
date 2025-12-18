@@ -7,7 +7,8 @@ import {
     ConfirmationResult,
     PhoneAuthProvider,
     signInWithCredential,
-    Auth
+    Auth,
+    User
 } from 'firebase/auth';
 import { auth } from './firebase';
 
@@ -66,7 +67,7 @@ export const sendOTP = async (phoneNumber: string): Promise<ConfirmationResult |
 export const verifyOTP = async (
     confirmationResult: ConfirmationResult,
     code: string
-): Promise<any> => {
+): Promise<User> => {
     try {
         const result = await confirmationResult.confirm(code);
         console.log('OTP verified successfully');

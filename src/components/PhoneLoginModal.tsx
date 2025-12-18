@@ -6,15 +6,18 @@ import { sendOTP, verifyOTP } from '@/lib/phoneAuth';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import type { ConfirmationResult, User } from 'firebase/auth';
 
-export default function PhoneLoginModal({ onClose, onSuccess }: {
+interface PhoneLoginModalProps {
     onClose: () => void;
-    onSuccess: (user: any) => void;
-}) {
+    onSuccess: (user: User) => void;
+}
+
+export default function PhoneLoginModal({ onClose, onSuccess }: PhoneLoginModalProps) {
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState('');
     const [step, setStep] = useState<'phone' | 'otp'>('phone');
-    const [confirmationResult, setConfirmationResult] = useState<any>(null);
+    const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
     const [loading, setLoading] = useState(false);
 
     const handleSendOTP = async () => {
@@ -26,12 +29,17 @@ export default function PhoneLoginModal({ onClose, onSuccess }: {
         setLoading(true);
         try {
             const result = await sendOTP(phone);
-            setConfirmationResult(result);
-            setStep('otp');
-            toast.success('OTP sent to your phone!');
-        } catch (error: any) {
+            if (result) {
+                setConfirmationResult(result);
+                setStep('otp');
+                toast.success('OTP sent to your phone!');
+            } else {
+                toast.error('Failed to send OTP. Please try again.');
+            }
+        } catch (error: unknown) {
             console.error(error);
-            toast.error(error.message || 'Failed to send OTP');
+            const errorMessage = error instanceof Error ? error.message : 'Failed to send OTP';
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -43,13 +51,18 @@ export default function PhoneLoginModal({ onClose, onSuccess }: {
             return;
         }
 
+        if (!confirmationResult) {
+            toast.error('Please send OTP first');
+            return;
+        }
+
         setLoading(true);
         try {
             const user = await verifyOTP(confirmationResult, otp);
             toast.success('Phone verified successfully!');
 
             // Send to backend to create/update user session
-            const response = await fetch('/api/auth/phone-login', {
+            await fetch('/api/auth/phone-login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -58,10 +71,9 @@ export default function PhoneLoginModal({ onClose, onSuccess }: {
                 }),
             });
 
-            const data = await response.json();
-            onSuccess(data.user);
+            onSuccess(user);
             onClose();
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(error);
             toast.error('Invalid OTP. Please try again.');
         } finally {

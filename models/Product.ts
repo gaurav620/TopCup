@@ -1,48 +1,73 @@
 import mongoose from 'mongoose';
 
-export interface IProduct extends mongoose.Document {
-    name: string;
-    description: string;
-    price: number;
-    image: string;
-    category: string;
-    stock?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-const productSchema = new mongoose.Schema<IProduct>({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
     },
-    description: {
+    slug: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        index: true,
     },
     price: {
         type: Number,
         required: true,
-        min: 0
+        min: 0,
     },
-    image: {
+    discountPrice: {
+        type: Number,
+        min: 0,
+    },
+    description: {
         type: String,
-        required: true
+        required: true,
     },
+    shortDescription: {
+        type: String,
+    },
+    images: [{
+        type: String,
+        required: true,
+    }],
     category: {
         type: String,
-        required: true
+        required: true,
+        index: true,
     },
-    stock: {
+    weight: {
+        type: String,
+    },
+    isBestseller: {
+        type: Boolean,
+        default: false,
+    },
+    isFeatured: {
+        type: Boolean,
+        default: false,
+    },
+    averageRating: {
         type: Number,
         default: 0,
-        min: 0
-    }
+    },
+    totalReviews: {
+        type: Number,
+        default: 0,
+    },
+    inStock: {
+        type: Boolean,
+        default: true,
+    },
+    tags: [{
+        type: String,
+    }],
 }, {
-    timestamps: true
+    timestamps: true,
 });
 
-const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', productSchema);
+// Prevent model recompilation error in Next.js hot reload
+const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 
 export default Product;

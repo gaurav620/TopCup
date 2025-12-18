@@ -6,6 +6,14 @@ import { trackPageView } from '@/lib/analytics';
 import { usePathname } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+interface NotificationPayload {
+  notification?: {
+    title?: string;
+    body?: string;
+    icon?: string;
+  };
+}
+
 export default function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -42,10 +50,11 @@ export default function FirebaseProvider({ children }: { children: React.ReactNo
 
     // Listen for foreground messages
     onMessageListener()
-      .then((payload: any) => {
-        console.log('Received foreground message:', payload);
+      .then((payload: unknown) => {
+        const message = payload as NotificationPayload;
+        console.log('Received foreground message:', message);
 
-        const { notification } = payload;
+        const { notification } = message;
         if (notification) {
           // Show toast notification
           toast.custom((t) => (

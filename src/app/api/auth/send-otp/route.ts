@@ -55,17 +55,17 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if user exists
-        const user = await User.findOne(
-            type === 'phone' ? { phone: identifier } : { email: identifier.toLowerCase() }
-        );
+        // Check if user exists (Optional: can be removed if supporting signup via OTP)
+        // const user = await User.findOne(
+        //     type === 'phone' ? { phone: identifier } : { email: identifier.toLowerCase() }
+        // );
 
-        if (!user) {
-            return NextResponse.json(
-                { error: 'No account found. Please sign up first.' },
-                { status: 404 }
-            );
-        }
+        // if (!user) {
+        //     return NextResponse.json(
+        //         { error: 'No account found. Please sign up first.' },
+        //         { status: 404 }
+        //     );
+        // }
 
         // Generate OTP
         const otp = generateOTP();

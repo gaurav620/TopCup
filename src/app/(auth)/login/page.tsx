@@ -163,125 +163,112 @@ export default function LoginPage() {
                         </button>
                     </div>
 
-                    <AnimatePresence mode="wait">
-                        {loginMethod === 'email' ? (
-                            <motion.div
-                                key="email-form"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
+                    {/* Login form tabs - CSS transitions for smooth switching */}
+                    {loginMethod === 'email' ? (
+                        <div className="transition-all duration-300">
+                            <form
+                                onSubmit={handleEmailLogin}
+                                className="space-y-4"
                             >
-                                <form
-                                    onSubmit={handleEmailLogin}
-                                    className="space-y-4"
-                                >
-                                    <Input
-                                        label="Email Address"
-                                        type="email"
-                                        placeholder="you@example.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        leftIcon={<Mail className="w-5 h-5" />}
-                                        required
-                                    />
-                                    <Input
-                                        label="Password"
-                                        type="password"
-                                        placeholder="Enter your password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        leftIcon={<Lock className="w-5 h-5" />}
-                                        showPasswordToggle
-                                        required
-                                    />
-                                    <div className="flex items-center justify-between text-sm">
-                                        <label className="flex items-center gap-2">
-                                            <input type="checkbox" className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
-                                            <span className="text-gray-600">Remember me</span>
-                                        </label>
-                                        <Link href="/forgot-password" className="text-primary-600 hover:underline">
-                                            Forgot password?
-                                        </Link>
-                                    </div>
-                                    <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
-                                        Sign In
-                                    </Button>
-                                </form>
-                            </motion.div>
-
-                        ) : (
-                            <motion.div
-                                key="phone-form"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
+                                <Input
+                                    label="Email Address"
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    leftIcon={<Mail className="w-5 h-5" />}
+                                    required
+                                />
+                                <Input
+                                    label="Password"
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    leftIcon={<Lock className="w-5 h-5" />}
+                                    showPasswordToggle
+                                    required
+                                />
+                                <div className="flex items-center justify-between text-sm">
+                                    <label className="flex items-center gap-2">
+                                        <input type="checkbox" className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                                        <span className="text-gray-600">Remember me</span>
+                                    </label>
+                                    <Link href="/forgot-password" className="text-primary-600 hover:underline">
+                                        Forgot password?
+                                    </Link>
+                                </div>
+                                <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
+                                    Sign In
+                                </Button>
+                            </form>
+                        </div>
+                    ) : (
+                        <div className="transition-all duration-300">
+                            <form
+                                onSubmit={handlePhoneLogin}
+                                className="space-y-4"
                             >
-                                <form
-                                    onSubmit={handlePhoneLogin}
-                                    className="space-y-4"
-                                >
-                                    <div className="space-y-1">
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Phone Number
-                                        </label>
-                                        <div className="flex gap-2">
-                                            <div className="flex items-center px-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-600">
-                                                +91
-                                            </div>
-                                            <input
-                                                type="tel"
-                                                placeholder="9876543210"
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                                className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
-                                                required
-                                            />
+                                <div className="space-y-1">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        Phone Number
+                                    </label>
+                                    <div className="flex gap-2">
+                                        <div className="flex items-center px-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-600">
+                                            +91
                                         </div>
+                                        <input
+                                            type="tel"
+                                            placeholder="9876543210"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+                                            required
+                                        />
                                     </div>
+                                </div>
 
-                                    {otpSent ? (
-                                        <>
-                                            <Input
-                                                label="Enter OTP"
-                                                type="text"
-                                                placeholder="Enter 6-digit OTP"
-                                                value={otp}
-                                                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                                                maxLength={6}
-                                                required
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={handleSendOtp}
-                                                className="text-sm text-primary-600 hover:underline"
-                                                disabled={otpLoading}
-                                            >
-                                                Resend OTP
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <Button
+                                {otpSent ? (
+                                    <>
+                                        <Input
+                                            label="Enter OTP"
+                                            type="text"
+                                            placeholder="Enter 6-digit OTP"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                                            maxLength={6}
+                                            required
+                                        />
+                                        <button
                                             type="button"
-                                            fullWidth
-                                            size="lg"
-                                            variant="outline"
                                             onClick={handleSendOtp}
-                                            isLoading={otpLoading}
+                                            className="text-sm text-primary-600 hover:underline"
+                                            disabled={otpLoading}
                                         >
-                                            Send OTP
-                                        </Button>
-                                    )}
+                                            Resend OTP
+                                        </button>
+                                    </>
+                                ) : (
+                                    <Button
+                                        type="button"
+                                        fullWidth
+                                        size="lg"
+                                        variant="outline"
+                                        onClick={handleSendOtp}
+                                        isLoading={otpLoading}
+                                    >
+                                        Send OTP
+                                    </Button>
+                                )}
 
-                                    {otpSent && (
-                                        <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
-                                            Verify & Sign In
-                                        </Button>
-                                    )}
-                                </form>
-                            </motion.div>
-
-                        )}
-                    </AnimatePresence>
+                                {otpSent && (
+                                    <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
+                                        Verify & Sign In
+                                    </Button>
+                                )}
+                            </form>
+                        </div>
+                    )}
 
                     {/* Divider */}
                     <div className="relative my-6">
